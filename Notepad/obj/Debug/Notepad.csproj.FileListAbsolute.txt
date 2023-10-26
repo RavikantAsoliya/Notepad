@@ -13,3 +13,5 @@ C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.csproj.Gene
 C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.csproj.CoreCompileInputs.cache
 C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.exe
 C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.pdb
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Templates\DayMode.baml
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\App.baml

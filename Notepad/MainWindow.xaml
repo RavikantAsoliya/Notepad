@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <!-- Menu bar at the top -->
-        <Menu Name="Menubar" Grid.Row="0">
+        <Menu Style="{DynamicResource MenuBarStyle}" Name="Menubar" Grid.Row="0">
             <!-- File menu -->
             <MenuItem Header="_File">
                 <MenuItem Header="_New"></MenuItem>
@@ -81,7 +81,7 @@
         </Menu>
 
         <!-- TextBox for text input, occupies the second row of the main grid -->
-        <TextBox Grid.Row="1" Name="TextArea"
+        <TextBox Style="{DynamicResource TextAreaStyle}" Grid.Row="1" Name="TextArea"
                  AcceptsReturn="True" AcceptsTab="True" Margin="5, 0, 0, 0"
                  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         </TextBox>

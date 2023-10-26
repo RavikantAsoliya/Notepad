@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:Notepad"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <!-- Merged resource dictionaries to define the application's styling -->
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Including a XAML resource file for styling (DayMode.xaml) -->
+                <ResourceDictionary Source="Templates/DayMode.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
