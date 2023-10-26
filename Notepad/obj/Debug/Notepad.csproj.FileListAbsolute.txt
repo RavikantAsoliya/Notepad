@@ -1,0 +1,15 @@
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\bin\Debug\Notepad.exe.config
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\bin\Debug\Notepad.exe
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\bin\Debug\Notepad.pdb
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.csproj.AssemblyReference.cache
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\MainWindow.g.cs
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\App.g.cs
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad_MarkupCompile.cache
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad_MarkupCompile.lref
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\MainWindow.baml
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.g.resources
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.Properties.Resources.resources
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.csproj.GenerateResource.cache
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.csproj.CoreCompileInputs.cache
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.exe
+C:\Users\Ravikant\Desktop\Projects\Notepad\Notepad\obj\Debug\Notepad.pdb

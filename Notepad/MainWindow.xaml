@@ -5,8 +5,156 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Notepad"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Untitled - Notepad" Height="450" Width="800"
+        ResizeMode="CanResizeWithGrip">
     <Grid>
-        
+        <!-- The main layout grid with three rows -->
+        <Grid.RowDefinitions>
+            <!-- Top row for the menu bar -->
+            <RowDefinition Height="auto"/>
+            <!-- Middle row for the content/text area -->
+            <RowDefinition/>
+            <!-- Bottom row for status bar, if any -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu bar at the top -->
+        <Menu Name="Menubar" Grid.Row="0">
+            <!-- File menu -->
+            <MenuItem Header="_File">
+                <MenuItem Header="_New"></MenuItem>
+                <MenuItem Header="New _Window"></MenuItem>
+                <MenuItem Header="_Open"></MenuItem>
+                <MenuItem Header="_Save"></MenuItem>
+                <MenuItem Header="Save _As"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Page Set_up"></MenuItem>
+                <MenuItem Header="_Print"></MenuItem>
+                <Separator/>
+                <MenuItem Header="E_xit"></MenuItem>
+            </MenuItem>
+
+            <!-- Edit menu -->
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo"></MenuItem>
+                <MenuItem Header="Redo"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Cu_t"></MenuItem>
+                <MenuItem Header="_Copy"></MenuItem>
+                <MenuItem Header="_Paste"></MenuItem>
+                <MenuItem Header="De_lete"></MenuItem>
+                <Separator/>
+                <MenuItem Header="_Search with Bing..."></MenuItem>
+                <MenuItem Header="_Find"></MenuItem>
+                <MenuItem Header="Find _Next"></MenuItem>
+                <MenuItem Header="Find Pre_vious"></MenuItem>
+                <MenuItem Header="_Replace..."></MenuItem>
+                <MenuItem Header="_Go To..."></MenuItem>
+                <Separator/>
+                <MenuItem Header="Select _All"></MenuItem>
+                <MenuItem Header="Time/_Date"></MenuItem>
+            </MenuItem>
+
+            <!-- Format menu -->
+            <MenuItem Header="F_ormat">
+                <MenuItem Header="_Word Wrap"></MenuItem>
+                <MenuItem Header="_Font..."></MenuItem>
+            </MenuItem>
+
+            <!-- View menu -->
+            <MenuItem Header="_View">
+                <MenuItem Header="_Zoom">
+                    <MenuItem Header="Zoom _In"></MenuItem>
+                    <MenuItem Header="Zoom _Out"></MenuItem>
+                    <MenuItem Header="_Restore Default Zoom"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Status Bar"></MenuItem>
+            </MenuItem>
+
+            <!-- Help menu -->
+            <MenuItem Header="_Help">
+                <MenuItem Header="View _Help"></MenuItem>
+                <MenuItem Header="Send _Feedback"></MenuItem>
+                <Separator/>
+                <MenuItem Header="_About Notepad"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <!-- TextBox for text input, occupies the second row of the main grid -->
+        <TextBox Grid.Row="1" Name="TextArea"
+                 AcceptsReturn="True" AcceptsTab="True" Margin="5, 0, 0, 0"
+                 VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        </TextBox>
+
+        <!-- Status Bar at the bottom, occupying the third row of the main grid -->
+        <StatusBar Name="NotepadStatusBar" Grid.Row="2" BorderBrush="LightGray" BorderThickness="0,1,0,0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- Status bar items layout within a grid -->
+                    <Grid Width="{Binding Path=Width, ElementName=window}">
+                        <Grid.ColumnDefinitions>
+                            <!-- Columns within the grid -->
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <!-- Status Bar Items -->
+
+            <!-- Status bar item for displaying file path (hidden by default) -->
+            <StatusBarItem Grid.Column="0" Name="FilePathStatusBarItem"
+                           HorizontalAlignment="Left"
+                           Visibility="Hidden"></StatusBarItem>
+
+            <!-- Separator between status bar items -->
+            <Separator Grid.Column="1"
+                       HorizontalAlignment="Right" 
+                       Background="LightGray"></Separator>
+
+            <!-- Status bar item for displaying cursor location -->
+            <StatusBarItem Grid.Column="2" Name="CursorLocationStatusBarItem"
+                           HorizontalAlignment="Right" 
+                           Width="130">Ln 1, Col 1</StatusBarItem>
+
+            <!-- Separator -->
+            <Separator Grid.Column="3" 
+                       HorizontalAlignment="Right" 
+                       Background="LightGray"></Separator>
+
+            <!-- Status bar item for displaying zoom level -->
+            <StatusBarItem Grid.Column="4"
+                           HorizontalAlignment="Right"
+                           Width="60">100%</StatusBarItem>
+
+            <!-- Separator -->
+            <Separator Grid.Column="5" 
+                       HorizontalAlignment="Right" 
+                       Background="LightGray"></Separator>
+
+            <!-- Status bar item for displaying line-ending type -->
+            <StatusBarItem Grid.Column="6"
+                           HorizontalAlignment="Right"
+                           Width="130">Windows (CRLF)</StatusBarItem>
+
+            <!-- Separator -->
+            <Separator Grid.Column="7" 
+                       HorizontalAlignment="Right" 
+                       Background="LightGray"></Separator>
+
+            <!-- Status bar item for displaying text encoding -->
+            <StatusBarItem Grid.Column="8"
+                           HorizontalAlignment="Right"
+                           Width="100">UTF-8</StatusBarItem>
+        </StatusBar>
+
     </Grid>
 </Window>
