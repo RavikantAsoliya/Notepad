@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,26 @@ namespace Notepad
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Gets or sets the content data of the current document.
+        /// </summary>
+        public string FileData { get; set; } = "";
+
+        /// <summary>
+        /// Gets or sets the name of the current document file.
+        /// </summary>
+        public string FileName { get; set; } = "Untitled";
+
+        /// <summary>
+        /// Gets or sets the full path to the current document file.
+        /// </summary>
+        public string FilePath { get; set; } = "";
+
+        /// <summary>
+        /// Gets or sets a flag indicating whether there are unsaved changes in the current document.
+        /// </summary>
+        public bool ShouldSave { get; set; } = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +48,7 @@ namespace Notepad
 
         private void New_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            
         }
 
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
