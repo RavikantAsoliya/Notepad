@@ -115,7 +115,7 @@
         <!-- TextBox for text input, occupies the second row of the main grid -->
         <TextBox Style="{DynamicResource TextAreaStyle}" Grid.Row="1" Name="TextArea"
                  AcceptsReturn="True" AcceptsTab="True" Margin="5, 0, 0, 0"
-                 VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                 VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" TextChanged="TextArea_TextChanged">
         </TextBox>
 
         <!-- Status Bar at the bottom, occupying the third row of the main grid -->
