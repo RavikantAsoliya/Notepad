@@ -45,6 +45,7 @@ namespace Notepad
         public MainWindow()
         {
             InitializeComponent();
+            TextArea.Focus();
         }
 
         #region File Menu Command's Code Implementation
@@ -354,6 +355,11 @@ namespace Notepad
 
         }
 
+        #region TextArea and StausBar Functionality
+
+        /// <summary>
+        /// Handles the TextChanged event of the text area, updating the window title and the unsaved changes flag.
+        /// </summary>
         private void TextArea_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Check if the current text matches the loaded file data
@@ -373,8 +379,44 @@ namespace Notepad
                 // Mark that there are unsaved changes
                 ShouldSave = true;
             }
+
+            // Update the cursor position display
+            GetCursorPosition();
         }
 
-        
+        /// <summary>
+        /// Retrieves and displays the current cursor position in the text area.
+        /// </summary>
+        private void GetCursorPosition()
+        {
+            int lineNumber = 1; // Initialize with the first line.
+            int columnNumber = 1;
+
+            // Get the current cursor position.
+            int caretIndex = TextArea.CaretIndex;
+
+            // Split the text into lines based on line breaks (e.g., "\r\n" or "\n").
+            string[] lines = TextArea.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+
+            // Loop through each line to find the cursor's line and column.
+            foreach (string line in lines)
+            {
+                // Check if the caret index is within the current line.
+                if (caretIndex <= line.Length)
+                {
+                    columnNumber = caretIndex + 1; // Column number is 1-based.
+                    break;
+                }
+
+                // Move to the next line.
+                caretIndex -= line.Length + Environment.NewLine.Length;
+                lineNumber++;
+            }
+
+            // Display the cursor's position.
+            CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
+        }
+
+        #endregion
     }
 }
