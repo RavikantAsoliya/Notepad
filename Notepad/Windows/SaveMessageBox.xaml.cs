@@ -24,6 +24,12 @@ namespace Notepad.Windows
         /// </summary>
         public string Message { get; set; } = "Do you want to changes to Untitled?";
 
+        /// <summary>
+        /// Gets or sets the result of the user's choice in the SaveMessageBox dialog.
+        /// This property is a nullable boolean (bool?) that represents the user's decision.
+        /// </summary>
+        public bool? Result { get; set; }
+
         public SaveMessageBox()
         {
             InitializeComponent();
@@ -38,29 +44,29 @@ namespace Notepad.Windows
         }
 
         /// <summary>
-        /// Handles the Click event of the SaveButton, setting the DialogResult to true and closing the window.
+        /// Handles the Click event of the SaveButton, setting the Result to true and closing the window.
         /// </summary>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true; // Set the DialogResult to true.
+            Result = true; // Set the Result to true.
             this.Close(); // Close the window.
         }
 
         /// <summary>
-        /// Handles the Click event of the DontSaveButton, setting the DialogResult to false and closing the window.
+        /// Handles the Click event of the DontSaveButton, setting the Result to false and closing the window.
         /// </summary>
         private void DontSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false; // Set the DialogResult to false.
+            Result = false; // Set the Result to false.
             this.Close(); // Close the window.
         }
 
         /// <summary>
-        /// Handles the Click event of the CancelButton, setting the DialogResult to null and closing the window.
+        /// Handles the Click event of the CancelButton, setting the Result to null and closing the window.
         /// </summary>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = null; // Set the DialogResult to null.
+            Result = null; // Set the Result to null.
             this.Close(); // Close the window.
         }
 

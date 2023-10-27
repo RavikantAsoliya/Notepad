@@ -64,7 +64,6 @@ namespace Notepad
                     // Save the current document before creating a new one.
                     SaveOldDocument();
                 }
-                //else if (result == null || (result == true ))//&& SaveAsNewDocument() == false
                 else if (result == null || (result == true && SaveAsNewDocument() == false))
                 {
                     // User canceled or encountered an error while saving, so do not create a new document.
@@ -97,7 +96,8 @@ namespace Notepad
             };
 
             // Show the dialog to the user and Return the result of the user's choice (true for save, false for discard, null for cancel).
-            return askToSave.ShowDialog();
+            askToSave.ShowDialog();
+            return askToSave.Result;
         }
 
         /// <summary>
@@ -117,9 +117,51 @@ namespace Notepad
             this.Title = FileName + " - Notepad";  // Update the window title.
         }
 
+        /// <summary>
+        /// Executes the Open command, allowing the user to open an existing text document.
+        /// </summary>
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Check if there are unsaved changes (ShouldSave) and if the user chooses to save them (AskToSaveFile() == true).
+            if (ShouldSave && AskToSaveFile() == true)
+            {
+                // If the file already exists, save the changes to the current document.
+                if (File.Exists(FilePath))
+                    SaveOldDocument();
+                // If the file does not exist, prompt the user to save changes as a new document.
+                else
+                    SaveAsNewDocument();
+            }
 
+            // Open an existing text document using the OpenFile method.
+            OpenFile();
+        }
+
+        /// <summary>
+        /// Opens a file dialog to select and load a text document into the Notepad application.
+        /// </summary>
+        private void OpenFile()
+        {
+            // Create a new OpenFileDialog instance for opening files.
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Text Document (*.txt)|*.txt|All Files (*.*)|*.*", // Define the file type filters for the dialog.
+                Title = "Open", // Set the dialog's title.
+                Multiselect = false, // Allow only single file selection.
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), // Set the initial directory for the file dialog to the user's Documents folder.
+                RestoreDirectory = true // Restore the directory to its previously selected location
+            };
+
+            // Show the open file dialog and check if the user selected a file.
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FilePath = openFileDialog.FileName; // Get the full path of the selected file.
+                FileName = System.IO.Path.GetFileNameWithoutExtension(FilePath); // Extract the file name without its extension.
+                FileData = File.ReadAllText(FilePath); // Read the content of the selected file and store it in FileData.
+                TextArea.Text = FileData; // Set the TextArea's text to the content of the selected file.
+                this.Title = FileName + " - Notepad"; // Update the window title to reflect the file name.
+                ShouldSave = false; // Mark that there are no unsaved changes in the current document.
+            }
         }
 
         /// <summary>
@@ -201,11 +243,31 @@ namespace Notepad
 
         }
 
+        /// <summary>
+        /// Executes the command to open a new instance of the Notepad application window.
+        /// </summary>
         private void NewWindow_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // First Way:
 
+            // Get the filename of the current running process (your application executable).
+            //string currentProcessFileName = Process.GetCurrentProcess().MainModule.FileName;
+
+            // Start a new instance of the same application, effectively opening a new window.
+            //Process.Start(currentProcessFileName);
+
+            // Second Way:
+
+            // Create a new instance of the MainWindow class to open a new Notepad window
+            MainWindow newWindow = new MainWindow();
+
+            // Show the new window to the user
+            newWindow.Show();
         }
 
+        /// <summary>
+        /// Executes the Save As command, allowing the user to specify a new location for the current document.
+        /// </summary>
         private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // Check if the current document already exists on the file system.
