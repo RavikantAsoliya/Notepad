@@ -334,7 +334,23 @@ namespace Notepad
 
         #endregion
 
+        #region
 
+        /// <summary>
+        /// Determines whether the Paste command can be executed.
+        /// </summary>
+        /// <param name="sender">The command source.</param>
+        /// <param name="e">The event data.</param>
+        private void Paste_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Check if there is text data in the clipboard.
+            if (System.Windows.Clipboard.ContainsText())
+                e.CanExecute = true; // Allow execution if there is text in the clipboard.
+            else
+                e.CanExecute = false; // Disallow execution if the clipboard does not contain text.
+        }
+
+        #endregion
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
 
@@ -418,5 +434,7 @@ namespace Notepad
         }
 
         #endregion
+
+        
     }
 }

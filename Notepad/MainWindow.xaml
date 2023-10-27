@@ -14,7 +14,7 @@
         <CommandBinding x:Name="Open" Command="ApplicationCommands.Open" Executed="Open_Executed"/>
         <CommandBinding x:Name="Save" Command="ApplicationCommands.Save" Executed="Save_Executed"/>
         <CommandBinding x:Name="Print" Command="ApplicationCommands.Print" Executed="Print_Executed"/>
-        <CommandBinding x:Name='Paste' Command="ApplicationCommands.Paste"/>
+        <CommandBinding x:Name='Paste' Command="ApplicationCommands.Paste" CanExecute="Paste_CanExecute"/>
         <CommandBinding x:Name="Delete" Command="ApplicationCommands.Delete"/>
         <CommandBinding x:Name="Find" Command="ApplicationCommands.Find"/>
         <CommandBinding x:Name="Replace" Command="ApplicationCommands.Replace" Executed="Replace_Executed"/>
