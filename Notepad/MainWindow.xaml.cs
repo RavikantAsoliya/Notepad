@@ -350,6 +350,28 @@ namespace Notepad
                 e.CanExecute = false; // Disallow execution if the clipboard does not contain text.
         }
 
+        /// <summary>
+        /// Determines whether the Delete command can be executed.
+        /// </summary>
+        private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Check if there is selected text in the TextArea.
+            if (TextArea.SelectedText.Length > 0)
+                e.CanExecute = true; // Allow execution if there is selected text.
+            else
+                e.CanExecute = false; // Disallow execution if no text is selected.
+        }
+
+        /// <summary>
+        /// Executes the "Delete" command, which removes the selected text in the text area.
+        /// </summary>
+        private void Delete_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Delete the selected text by setting it to an empty string.
+            TextArea.SelectedText = "";
+        }
+
+
         #endregion
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -432,6 +454,7 @@ namespace Notepad
             // Display the cursor's position.
             CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
         }
+
 
         #endregion
 
