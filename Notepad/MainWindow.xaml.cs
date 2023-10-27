@@ -1,6 +1,7 @@
 ﻿using Notepad.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -371,6 +372,29 @@ namespace Notepad
             TextArea.SelectedText = "";
         }
 
+        /// <summary>
+        /// Determines whether the Search with Bing command can be executed.
+        /// </summary>
+        private void SearchWithBing_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Check if there is selected text in the TextArea.
+            if (TextArea.SelectedText.Length > 0)
+                e.CanExecute = true; // Allow execution if there is selected text.
+            else
+                e.CanExecute = false; // Disallow execution if no text is selected.
+        }
+
+        /// <summary>
+        /// Executes the "Search with Bing" command, which opens a web browser and performs a Bing search using the selected text as the query.
+        /// </summary>
+        private void SearchWithBing_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Construct the Bing search URL with the selected text as the query, and Open the default web browser to perform the Bing search.
+            //Process.Start($"https://www.bing.com/search?q={Uri.EscapeDataString(TextArea.SelectedText)}");
+
+            // Construct the Bing search URL with the selected text as the query, and Open the Microsoft Edge web browser to perform the Bing search.
+            Process.Start($"microsoft-edge:https://www.bing.com/search?q={Uri.EscapeDataString(TextArea.SelectedText)}");
+        }
 
         #endregion
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -456,8 +480,9 @@ namespace Notepad
         }
 
 
+
+
         #endregion
 
-        
     }
 }

@@ -15,7 +15,7 @@
         <CommandBinding x:Name="Save" Command="ApplicationCommands.Save" Executed="Save_Executed"/>
         <CommandBinding x:Name="Print" Command="ApplicationCommands.Print" Executed="Print_Executed"/>
         <CommandBinding x:Name='Paste' Command="ApplicationCommands.Paste" CanExecute="Paste_CanExecute"/>
-        <CommandBinding x:Name="Delete" Command="ApplicationCommands.Delete"/>
+        <CommandBinding x:Name="Delete" Command="ApplicationCommands.Delete" CanExecute="Delete_CanExecute" Executed="Delete_Executed"/>
         <CommandBinding x:Name="Find" Command="ApplicationCommands.Find"/>
         <CommandBinding x:Name="Replace" Command="ApplicationCommands.Replace" Executed="Replace_Executed"/>
         <CommandBinding x:Name="SelectAll" Command="ApplicationCommands.SelectAll" Executed="SelectAll_Executed"/>
@@ -27,7 +27,7 @@
         <!-- Custom command "SaveAs" to save a document with a different name -->
         <CommandBinding x:Name="SaveAs" Command="local:CustomNotepadCommands.SaveAs" Executed="SaveAs_Executed"/>
         <!-- Custom command "SearchWithBing" to search with Bing -->
-        <CommandBinding x:Name="SearchWithBing" Command="local:CustomNotepadCommands.SearchWithBing"/>
+        <CommandBinding x:Name="SearchWithBing" Command="local:CustomNotepadCommands.SearchWithBing" CanExecute="SearchWithBing_CanExecute" Executed="SearchWithBing_Executed"/>
         <!-- Custom command "FindNext" to find the next occurrence -->
         <CommandBinding x:Name="FindNext" Command="local:CustomNotepadCommands.FindNext"/>
         <!-- Custom command "FindPrevious" to find the previous occurrence -->
