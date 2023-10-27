@@ -62,9 +62,10 @@ namespace Notepad
                 if (result == true && File.Exists(FilePath))
                 {
                     // Save the current document before creating a new one.
-                    // I will implement it later.
+                    SaveOldDocument();
                 }
-                else if (result == null || (result == true ))//&& SaveAsNewDocument() == false
+                //else if (result == null || (result == true ))//&& SaveAsNewDocument() == false
+                else if (result == null || (result == true && SaveAsNewDocument() == false))
                 {
                     // User canceled or encountered an error while saving, so do not create a new document.
                     return;
@@ -121,9 +122,78 @@ namespace Notepad
 
         }
 
+        /// <summary>
+        /// Executes the Save command, allowing the user to save the current document.
+        /// </summary>
+        /// <param name="sender">The sender of the command.</param>
+        /// <param name="e">The event arguments.</param>
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Check if the current document already exists on the file system and save it.
+            if (File.Exists(FilePath))
+                SaveOldDocument();
+            // If the document is new or has not been saved before, use SaveAsNewDocument to specify a location.
+            else
+                SaveAsNewDocument();
+        }
 
+        /// <summary>
+        /// Saves the contents of the text area to the previously opened file.
+        /// Updates the FileData, ShouldSave, and window title accordingly.
+        /// </summary>
+        private void SaveOldDocument()
+        {
+            // Write the text in the text area to the file at FilePath.
+            File.WriteAllText(FilePath, TextArea.Text);
+
+            // Update the FileData to match the saved content.
+            FileData = TextArea.Text;
+
+            // The document is now saved, so ShouldSave is set to false.
+            ShouldSave = false;
+
+            // Update the window title to reflect the saved state.
+            this.Title = FileName + " - Notepad";
+        }
+
+        /// <summary>
+        /// Opens a Save File dialog for the user to save the current document as a new file.
+        /// </summary>
+        /// <param name="defaultExtension">The default file extension to use for the new file.</param>
+        /// <returns>
+        /// A <see cref="bool"/> representing the dialog result. 
+        /// <see langword="true"/> if the document was saved successfully, 
+        /// <see langword="false"/> if the user canceled the operation, 
+        /// and <see langword="null"/> if an error occurred.
+        /// </returns>
+        private bool? SaveAsNewDocument(string defaultExtension = ".txt")
+        {
+            // Create a new SaveFileDialog instance for saving the document.
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Title = "Save As", // Set the dialog title.
+                FileName = FileName + defaultExtension, // Set the default file name using the specified default extension.
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), // Set the initial directory to the user's documents folder.
+                RestoreDirectory = true, // Allow the dialog to restore the last used directory.
+                DefaultExt = defaultExtension, // Set the default file extension.
+                Filter = "Text Document (*.txt)|*.txt|All Files (*.*)|*.*" // Define the filter for the file types in the dialog.
+            };
+
+            // Show the SaveFileDialog and store the result (true for success, false for failure, null for cancel).
+            bool? result = saveFileDialog.ShowDialog();
+
+            // Check if the user selected a file and clicked the "Save" button.
+            if (result == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, TextArea.Text); // Write the content of the TextArea to the selected file.
+                FilePath = saveFileDialog.FileName; // Update the FilePath to the selected file's path.
+                FileName = System.IO.Path.GetFileNameWithoutExtension(FilePath); // Extract the file name without its extension.
+                FileData = TextArea.Text; // Update the stored document data.
+                this.Title = FileName + " - Notepad"; // Update the window title to reflect the new file name.
+                ShouldSave = false; // Reset the "ShouldSave" flag as the document is now saved.
+            }
+            // Return the result (true for success, false for failure, null for cancel).
+            return result;
         }
 
         private void Print_Executed(object sender, ExecutedRoutedEventArgs e)
