@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Notepad.Commands_Binding" 
         mc:Ignorable="d"
         Title="Untitled - Notepad" Height="450" Width="800"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip" Closing="Window_Closing">
     <Window.CommandBindings>
         
         <!-- Built-in WPF Commands -->
@@ -60,10 +60,10 @@
                 <MenuItem Header="_Save" Command="ApplicationCommands.Save"></MenuItem>
                 <MenuItem Header="Save _As" Command="local:CustomNotepadCommands.SaveAs"></MenuItem>
                 <Separator/>
-                <MenuItem Header="Page Set_up"></MenuItem>
+                <MenuItem Header="Page Set_up" Name="PageSetup" Click="PageSetup_Click"></MenuItem>
                 <MenuItem Header="_Print" Command="ApplicationCommands.Print"></MenuItem>
                 <Separator/>
-                <MenuItem Header="E_xit"></MenuItem>
+                <MenuItem Header="E_xit" Name="Exit" Click="Exit_Click"></MenuItem>
             </MenuItem>
 
             <!-- Edit menu -->

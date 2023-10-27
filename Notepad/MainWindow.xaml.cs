@@ -47,6 +47,8 @@ namespace Notepad
             InitializeComponent();
         }
 
+        #region File Menu Command's Code Implementation
+
         /// <summary>
         /// Handles the execution of the "New" command, which creates a new empty document.
         /// If there are unsaved changes in the current document, it prompts the user to save or discard them.
@@ -115,6 +117,28 @@ namespace Notepad
             // Update the application title to reflect the new document state.
             ShouldSave = false;  // No unsaved changes in the new document.
             this.Title = FileName + " - Notepad";  // Update the window title.
+        }
+
+        /// <summary>
+        /// Executes the command to open a new instance of the Notepad application window.
+        /// </summary>
+        private void NewWindow_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // First Way:
+
+            // Get the filename of the current running process (your application executable).
+            //string currentProcessFileName = Process.GetCurrentProcess().MainModule.FileName;
+
+            // Start a new instance of the same application, effectively opening a new window.
+            //Process.Start(currentProcessFileName);
+
+            // Second Way:
+
+            // Create a new instance of the MainWindow class to open a new Notepad window
+            MainWindow newWindow = new MainWindow();
+
+            // Show the new window to the user
+            newWindow.Show();
         }
 
         /// <summary>
@@ -199,6 +223,18 @@ namespace Notepad
         }
 
         /// <summary>
+        /// Executes the Save As command, allowing the user to specify a new location for the current document.
+        /// </summary>
+        private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Check if the current document already exists on the file system.
+            if (File.Exists(FilePath))
+                SaveAsNewDocument(System.IO.Path.GetExtension(FilePath)); // If it exists, use the existing file's extension as the default when saving with a new name.
+            else
+                SaveAsNewDocument(); // If the document is new or has not been saved before, allow the user to specify a location.
+        }
+
+        /// <summary>
         /// Opens a Save File dialog for the user to save the current document as a new file.
         /// </summary>
         /// <param name="defaultExtension">The default file extension to use for the new file.</param>
@@ -238,44 +274,65 @@ namespace Notepad
             return result;
         }
 
+        private void PageSetup_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Implement Page Setup Feature
+        }
+
         private void Print_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            // TODO: Implement this Print Feature
         }
 
         /// <summary>
-        /// Executes the command to open a new instance of the Notepad application window.
+        /// Handles the click event of the Exit menu item or button to close the application.
         /// </summary>
-        private void NewWindow_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            // First Way:
+            // Close the application window.
+            this.Close();
+        }
 
-            // Get the filename of the current running process (your application executable).
-            //string currentProcessFileName = Process.GetCurrentProcess().MainModule.FileName;
-
-            // Start a new instance of the same application, effectively opening a new window.
-            //Process.Start(currentProcessFileName);
-
-            // Second Way:
-
-            // Create a new instance of the MainWindow class to open a new Notepad window
-            MainWindow newWindow = new MainWindow();
-
-            // Show the new window to the user
-            newWindow.Show();
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Check if the application should exit based on unsaved changes and user decisions.
+            e.Cancel = !ShouldExitApplication();
         }
 
         /// <summary>
-        /// Executes the Save As command, allowing the user to specify a new location for the current document.
+        /// Determines whether the application should exit, taking into account unsaved changes and user decisions.
         /// </summary>
-        private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+        /// <returns>
+        ///   <see langword="true"/> if the application should exit; otherwise, <see langword="false"/>.
+        /// </returns>
+        private bool ShouldExitApplication()
         {
-            // Check if the current document already exists on the file system.
-            if (File.Exists(FilePath))
-                SaveAsNewDocument(System.IO.Path.GetExtension(FilePath)); // If it exists, use the existing file's extension as the default when saving with a new name.
-            else
-                SaveAsNewDocument(); // If the document is new or has not been saved before, allow the user to specify a location.
+            // Check if there are unsaved changes.
+            if (!ShouldSave)
+                return true; // No changes to save, it's safe to exit.
+
+            // Prompt the user to save changes and get their choice (true for save, false for discard, null for cancel).
+            bool? result = AskToSaveFile();
+
+            // Check the user's choice.
+            if (result == true && File.Exists(FilePath))
+            {
+                // User chose to save, and the file exists, so save the current document.
+                SaveOldDocument();
+            }
+            else if (result == null || (result == true && SaveAsNewDocument() == false))
+            {
+                // User canceled or encountered an error while saving, or they chose not to save the current document.
+                // In any of these cases, it's not safe to exit the application.
+                return false;
+            }
+
+            // If none of the previous conditions are met, it's safe to exit.
+            return true;
         }
+
+        #endregion
+
 
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -317,5 +374,7 @@ namespace Notepad
                 ShouldSave = true;
             }
         }
+
+        
     }
 }
