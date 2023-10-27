@@ -24,5 +24,55 @@ namespace Notepad
         {
             InitializeComponent();
         }
+
+        private void New_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void Print_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void NewWindow_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void SelectAll_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void GoTo_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void TimeDate_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
     }
 }

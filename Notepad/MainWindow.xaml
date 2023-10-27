@@ -3,10 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Notepad"
+        xmlns:local="clr-namespace:Notepad.Commands_Binding" 
         mc:Ignorable="d"
         Title="Untitled - Notepad" Height="450" Width="800"
         ResizeMode="CanResizeWithGrip">
+    <Window.CommandBindings>
+        
+        <!-- Built-in WPF Commands -->
+        <CommandBinding x:Name="New" Command="ApplicationCommands.New" Executed="New_Executed"/>
+        <CommandBinding x:Name="Open" Command="ApplicationCommands.Open" Executed="Open_Executed"/>
+        <CommandBinding x:Name="Save" Command="ApplicationCommands.Save" Executed="Save_Executed"/>
+        <CommandBinding x:Name="Print" Command="ApplicationCommands.Print" Executed="Print_Executed"/>
+        <CommandBinding x:Name='Paste' Command="ApplicationCommands.Paste"/>
+        <CommandBinding x:Name="Delete" Command="ApplicationCommands.Delete"/>
+        <CommandBinding x:Name="Find" Command="ApplicationCommands.Find"/>
+        <CommandBinding x:Name="Replace" Command="ApplicationCommands.Replace" Executed="Replace_Executed"/>
+        <CommandBinding x:Name="SelectAll" Command="ApplicationCommands.SelectAll" Executed="SelectAll_Executed"/>
+
+        <!-- Custom Commands Binding -->
+        
+        <!-- Custom command "NewWindow" to open a new window -->
+        <CommandBinding x:Name="NewWindow" Command="local:CustomNotepadCommands.NewWindow" Executed="NewWindow_Executed"/>
+        <!-- Custom command "SaveAs" to save a document with a different name -->
+        <CommandBinding x:Name="SaveAs" Command="local:CustomNotepadCommands.SaveAs" Executed="SaveAs_Executed"/>
+        <!-- Custom command "SearchWithBing" to search with Bing -->
+        <CommandBinding x:Name="SearchWithBing" Command="local:CustomNotepadCommands.SearchWithBing"/>
+        <!-- Custom command "FindNext" to find the next occurrence -->
+        <CommandBinding x:Name="FindNext" Command="local:CustomNotepadCommands.FindNext"/>
+        <!-- Custom command "FindPrevious" to find the previous occurrence -->
+        <CommandBinding x:Name="FindPrevious" Command="local:CustomNotepadCommands.FindPrevious"/>
+        <!-- Custom command "GoTo" to navigate to a specific location -->
+        <CommandBinding x:Name="GoTo" Command="local:CustomNotepadCommands.GoTo" Executed="GoTo_Executed"/>
+        <!-- Custom command "TimeDate" to insert the current time and date -->
+        <CommandBinding x:Name="TimeDate" Command="local:CustomNotepadCommands.TimeDate" Executed="TimeDate_Executed"/>
+        
+    </Window.CommandBindings>
+
     <Grid>
         <!-- The main layout grid with three rows -->
         <Grid.RowDefinitions>
@@ -22,37 +54,37 @@
         <Menu Style="{DynamicResource MenuBarStyle}" Name="Menubar" Grid.Row="0">
             <!-- File menu -->
             <MenuItem Header="_File">
-                <MenuItem Header="_New"></MenuItem>
-                <MenuItem Header="New _Window"></MenuItem>
-                <MenuItem Header="_Open"></MenuItem>
-                <MenuItem Header="_Save"></MenuItem>
-                <MenuItem Header="Save _As"></MenuItem>
+                <MenuItem Header="_New" Command="ApplicationCommands.New"></MenuItem>
+                <MenuItem Header="New _Window" Command="local:CustomNotepadCommands.NewWindow"></MenuItem>
+                <MenuItem Header="_Open" Command="ApplicationCommands.Open"></MenuItem>
+                <MenuItem Header="_Save" Command="ApplicationCommands.Save"></MenuItem>
+                <MenuItem Header="Save _As" Command="local:CustomNotepadCommands.SaveAs"></MenuItem>
                 <Separator/>
                 <MenuItem Header="Page Set_up"></MenuItem>
-                <MenuItem Header="_Print"></MenuItem>
+                <MenuItem Header="_Print" Command="ApplicationCommands.Print"></MenuItem>
                 <Separator/>
                 <MenuItem Header="E_xit"></MenuItem>
             </MenuItem>
 
             <!-- Edit menu -->
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Undo"></MenuItem>
-                <MenuItem Header="Redo"></MenuItem>
+                <MenuItem Header="_Undo" Command="ApplicationCommands.Undo"></MenuItem>
+                <MenuItem Header="Redo" Command="ApplicationCommands.Redo"></MenuItem>
                 <Separator/>
-                <MenuItem Header="Cu_t"></MenuItem>
-                <MenuItem Header="_Copy"></MenuItem>
-                <MenuItem Header="_Paste"></MenuItem>
-                <MenuItem Header="De_lete"></MenuItem>
+                <MenuItem Header="Cu_t" Command="ApplicationCommands.Cut"></MenuItem>
+                <MenuItem Header="_Copy" Command="ApplicationCommands.Copy"></MenuItem>
+                <MenuItem Header="_Paste" Command="ApplicationCommands.Paste"></MenuItem>
+                <MenuItem Header="De_lete" Command="ApplicationCommands.Delete"></MenuItem>
                 <Separator/>
-                <MenuItem Header="_Search with Bing..."></MenuItem>
-                <MenuItem Header="_Find"></MenuItem>
-                <MenuItem Header="Find _Next"></MenuItem>
-                <MenuItem Header="Find Pre_vious"></MenuItem>
-                <MenuItem Header="_Replace..."></MenuItem>
-                <MenuItem Header="_Go To..."></MenuItem>
+                <MenuItem Header="_Search with Bing..." Command="local:CustomNotepadCommands.SearchWithBing"></MenuItem>
+                <MenuItem Header="_Find" Command="ApplicationCommands.Find"></MenuItem>
+                <MenuItem Header="Find _Next" Command="local:CustomNotepadCommands.FindNext"></MenuItem>
+                <MenuItem Header="Find Pre_vious" Command="local:CustomNotepadCommands.FindPrevious"></MenuItem>
+                <MenuItem Header="_Replace..." Command="ApplicationCommands.Replace"></MenuItem>
+                <MenuItem Header="_Go To..." Command="local:CustomNotepadCommands.GoTo"></MenuItem>
                 <Separator/>
-                <MenuItem Header="Select _All"></MenuItem>
-                <MenuItem Header="Time/_Date"></MenuItem>
+                <MenuItem Header="Select _All" Command="ApplicationCommands.SelectAll"></MenuItem>
+                <MenuItem Header="Time/_Date" Command="local:CustomNotepadCommands.TimeDate"></MenuItem>
             </MenuItem>
 
             <!-- Format menu -->
