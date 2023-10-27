@@ -208,7 +208,11 @@ namespace Notepad
 
         private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            // Check if the current document already exists on the file system.
+            if (File.Exists(FilePath))
+                SaveAsNewDocument(System.IO.Path.GetExtension(FilePath)); // If it exists, use the existing file's extension as the default when saving with a new name.
+            else
+                SaveAsNewDocument(); // If the document is new or has not been saved before, allow the user to specify a location.
         }
 
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
