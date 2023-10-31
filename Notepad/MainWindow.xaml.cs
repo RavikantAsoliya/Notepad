@@ -335,7 +335,7 @@ namespace Notepad
 
         #endregion
 
-        #region
+        #region Edit Menu Command's Code Implementation
 
         /// <summary>
         /// Determines whether the Paste command can be executed.
@@ -396,21 +396,26 @@ namespace Notepad
             Process.Start($"microsoft-edge:https://www.bing.com/search?q={Uri.EscapeDataString(TextArea.SelectedText)}");
         }
 
-        #endregion
-        private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
+        /// <summary>
+        /// Determines whether the Find command can be executed.
+        /// </summary>
+        private void Find_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            
+            // Check if there is any text in the TextArea.
+            if (TextArea.Text.Length > 0)
+                e.CanExecute = true; // Allow execution if there is text.
+            else
+                e.CanExecute = false; // Disallow execution if there is no text.
         }
 
-        /// <summary>
-        /// Executes the "Select All" command to select all text in the text area.
-        /// </summary>
-        /// <param name="sender">The sender of the command.</param>
-        /// <param name="e">The command event arguments.</param>
-        private void SelectAll_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void Find_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            // Select all text in the text area.
-            TextArea.SelectAll();
+
+        }
+
+        private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -447,6 +452,17 @@ namespace Notepad
         }
 
         /// <summary>
+        /// Executes the "Select All" command to select all text in the text area.
+        /// </summary>
+        /// <param name="sender">The sender of the command.</param>
+        /// <param name="e">The command event arguments.</param>
+        private void SelectAll_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Select all text in the text area.
+            TextArea.SelectAll();
+        }
+
+        /// <summary>
         /// Moves the cursor to the specified line in the text area.
         /// </summary>
         /// <param name="lineNumber">The line number to navigate to.</param>
@@ -463,10 +479,34 @@ namespace Notepad
             TextArea.ScrollToLine(lineNumber - 1);
         }
 
+        /// <summary>
+        /// Inserts the current date and time at the cursor position or replaces the selected text with it.
+        /// </summary>
         private void TimeDate_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Get the current date and time.
+            DateTime currentDateTime = DateTime.Now;
 
+            // Format the date and time as "h:mm tt M/d/yyyy".
+            string formattedTime = currentDateTime.ToString("h:mm tt M/d/yyyy");
+
+            // Check if text is selected in the TextArea.
+            if (TextArea.SelectedText.Length > 0)
+            {
+                // Replace the selected text with the formatted date and time.
+                TextArea.SelectedText = formattedTime;
+            }
+            else
+            {
+                // Get the cursor position.
+                int cursorPosition = TextArea.SelectionStart;
+
+                // Insert the formatted date and time at the cursor position.
+                TextArea.Text = TextArea.Text.Insert(cursorPosition, formattedTime);
+            }
         }
+
+        #endregion
 
         #region TextArea and StausBar Functionality
 
@@ -530,26 +570,7 @@ namespace Notepad
             CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
         }
 
-
-
-
         #endregion
-
-        /// <summary>
-        /// Determines whether the Find command can be executed.
-        /// </summary>
-        private void Find_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            // Check if there is any text in the TextArea.
-            if (TextArea.Text.Length > 0)
-                e.CanExecute = true; // Allow execution if there is text.
-            else
-                e.CanExecute = false; // Disallow execution if there is no text.
-        }
-
-        private void Find_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-
-        }
+        
     }
 }
