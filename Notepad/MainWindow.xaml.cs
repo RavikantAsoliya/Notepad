@@ -407,9 +407,54 @@ namespace Notepad
 
         }
 
+        /// <summary>
+        /// Executes the "Go To" command, which allows the user to navigate to a specific line in the text document.
+        /// </summary>
         private void GoTo_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Create a new GoToDialog to prompt the user for a line number input.
+            GoToDialog goToDialog = new GoToDialog
+            {
+                LineNumber = TextArea.LineCount.ToString(), // Set the default line number to the total line count.
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
 
+            // If the user confirms the dialog, proceed to navigate to the specified line number.
+            if (goToDialog.ShowDialog() == true)
+            {
+                // Parse the user's input into an integer representing the line number.
+                int lineNumber = int.Parse(goToDialog.LineNumber);
+
+                // Check if the line number is within a valid range (1 to the total line count).
+                if (lineNumber >= 1 && lineNumber <= TextArea.LineCount)
+                {
+                    // Move the cursor to the specified line.
+                    MoveCursorToLine(lineNumber);
+                }
+                else
+                {
+                    // Display an error message if the line number is invalid.
+                    System.Windows.MessageBox.Show("Invalid line number.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Moves the cursor to the specified line in the text area.
+        /// </summary>
+        /// <param name="lineNumber">The line number to navigate to.</param>
+        private void MoveCursorToLine(int lineNumber)
+        {
+            // Calculate the character index for the start of the specified line.
+            int lineStartIndex = TextArea.GetCharacterIndexFromLineIndex(lineNumber - 1);
+
+            // Set the cursor position and selection length.
+            TextArea.SelectionStart = lineStartIndex;
+            TextArea.SelectionLength = 0; // Optional: Remove selection if any.
+
+            // Scroll the text area to make the selected line visible.
+            TextArea.ScrollToLine(lineNumber - 1);
         }
 
         private void TimeDate_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -484,5 +529,21 @@ namespace Notepad
 
         #endregion
 
+        /// <summary>
+        /// Determines whether the Find command can be executed.
+        /// </summary>
+        private void Find_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Check if there is any text in the TextArea.
+            if (TextArea.Text.Length > 0)
+                e.CanExecute = true; // Allow execution if there is text.
+            else
+                e.CanExecute = false; // Disallow execution if there is no text.
+        }
+
+        private void Find_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
     }
 }
