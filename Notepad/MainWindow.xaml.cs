@@ -399,12 +399,18 @@ namespace Notepad
         #endregion
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            
         }
 
+        /// <summary>
+        /// Executes the "Select All" command to select all text in the text area.
+        /// </summary>
+        /// <param name="sender">The sender of the command.</param>
+        /// <param name="e">The command event arguments.</param>
         private void SelectAll_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            // Select all text in the text area.
+            TextArea.SelectAll();
         }
 
         /// <summary>
