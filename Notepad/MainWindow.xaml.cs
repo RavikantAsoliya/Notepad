@@ -508,6 +508,28 @@ namespace Notepad
 
         #endregion
 
+        #region Format Menu Command's Code Implementation
+
+        /// <summary>
+        /// Enables word wrapping for the text area.
+        /// </summary>
+        private void WordWrap_Checked(object sender, RoutedEventArgs e)
+        {
+            // Enable word wrapping.
+            TextArea.TextWrapping = TextWrapping.WrapWithOverflow;
+        }
+
+        /// <summary>
+        /// Disables word wrapping for the text area.
+        /// </summary>
+        private void WordWrap_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Disable word wrapping.
+            TextArea.TextWrapping = TextWrapping.NoWrap;
+        }
+
+        #endregion
+
         #region TextArea and StausBar Functionality
 
         /// <summary>
@@ -571,6 +593,7 @@ namespace Notepad
         }
 
         #endregion
+
         
     }
 }
