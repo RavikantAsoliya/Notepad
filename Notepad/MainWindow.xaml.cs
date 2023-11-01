@@ -42,11 +42,15 @@ namespace Notepad
         /// Gets or sets a flag indicating whether there are unsaved changes in the current document.
         /// </summary>
         public bool ShouldSave { get; set; } = false;
+        
+
+        double currentFontSize; // Declare a variable to store the current font size.
 
         public MainWindow()
         {
             InitializeComponent();
             TextArea.Focus();
+            currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
         }
 
         #region File Menu Command's Code Implementation
@@ -533,6 +537,75 @@ namespace Notepad
         #region View Menu Command's Code Implementation
 
         /// <summary>
+        /// Gets or sets the current zoom level, which determines the scaling of content.
+        /// </summary>
+        public double ZoomLevel { get; set; } = 1.0;
+
+        /// <summary>
+        /// Gets or sets the step size used to adjust the zoom level, typically in increments like 10%.
+        /// </summary>
+        public double ZoomStep { get; set; } = 0.1;
+
+        /// <summary>
+        /// Increases the zoom level by a specified step, limiting it to a maximum of 500%.
+        /// </summary>
+        private void ZoomIn_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ZoomLevel += ZoomStep; // Increase the zoom level by the zoom step
+            if (ZoomLevel > 5.0) // Limit zoom to a maximum of 500%
+            {
+                ZoomLevel = 5.0;
+            }
+            RoundZoomLevel(); // Round the zoom level to a specified number of decimal places
+            ApplyZoom(); // Apply the updated zoom level to the TextArea
+        }
+
+        /// <summary>
+        /// Decreases the zoom level by a specified step, limiting it to a minimum of 10%.
+        /// </summary>
+        private void ZoomOut_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ZoomLevel -= ZoomStep; // Decrease the zoom level by the zoom step
+            if (ZoomLevel < 0.1) // Limit zoom to a minimum of 10%
+            {
+                ZoomLevel = 0.1;
+            }
+            RoundZoomLevel(); // Round the zoom level to a specified number of decimal places
+            ApplyZoom(); // Apply the updated zoom level to the TextArea
+        }
+
+        /// <summary>
+        /// Restores the zoom level to the default 100%.
+        /// </summary>
+        private void RestoreDefaultZoom_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ZoomLevel = 1.0; // Reset to the default zoom level (100%)
+            ApplyZoom(); // Apply the default zoom level to the TextArea
+        }
+
+        /// <summary>
+        /// Applies the current zoom level to the TextArea and updates the status bar's zoom percentage display.
+        /// </summary>
+        private void ApplyZoom()
+        {
+            // Update the font size of the TextArea based on the zoomLevel
+            TextArea.FontSize = currentFontSize * ZoomLevel; // current font size is the initial font size
+
+            // Update the StatusBar ZoomPercentage to reflect the current zoom level
+            ZoomPercentage.Content = $"{(int)(ZoomLevel * 100)}%";
+        }
+
+        /// <summary>
+        /// Rounds the current zoom level to a specified number of decimal places (1 for 10% increments).
+        /// </summary>
+        private void RoundZoomLevel()
+        {
+            // Round the zoomLevel to a specific number of decimal places (1 for 10% increments)
+            int decimalPlaces = 1;
+            ZoomLevel = Math.Round(ZoomLevel, decimalPlaces);
+        }
+
+        /// <summary>
         /// Shows the status bar if it is not null.
         /// </summary>
         private void StatusBar_Checked(object sender, RoutedEventArgs e)
@@ -617,6 +690,7 @@ namespace Notepad
             // Display the cursor's position.
             CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
         }
+
 
 
         #endregion

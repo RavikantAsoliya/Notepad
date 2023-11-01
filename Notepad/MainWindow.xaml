@@ -36,7 +36,13 @@
         <CommandBinding x:Name="GoTo" Command="local:CustomNotepadCommands.GoTo" Executed="GoTo_Executed"/>
         <!-- Custom command "TimeDate" to insert the current time and date -->
         <CommandBinding x:Name="TimeDate" Command="local:CustomNotepadCommands.TimeDate" Executed="TimeDate_Executed"/>
-        
+        <!-- Custom command "ZoomIn" to zoom in the text content -->
+        <CommandBinding x:Name="ZoomIn" Command="local:CustomNotepadCommands.ZoomIn" Executed="ZoomIn_Executed"/>
+        <!-- Custom command "ZoomOut" to zoom out the text content -->
+        <CommandBinding x:Name="ZoomOut" Command="local:CustomNotepadCommands.ZoomOut" Executed="ZoomOut_Executed"/>
+        <!-- Custom command "RestoreDefaultZoom" to restore the default zoom level -->
+        <CommandBinding x:Name="RestoreDefaultZoom" Command="local:CustomNotepadCommands.RestoreDefaultZoom" Executed="RestoreDefaultZoom_Executed"/>
+
     </Window.CommandBindings>
 
     <Grid>
@@ -96,9 +102,9 @@
             <!-- View menu -->
             <MenuItem Header="_View">
                 <MenuItem Header="_Zoom">
-                    <MenuItem Header="Zoom _In"></MenuItem>
-                    <MenuItem Header="Zoom _Out"></MenuItem>
-                    <MenuItem Header="_Restore Default Zoom"></MenuItem>
+                    <MenuItem Header="Zoom _In" Command="local:CustomNotepadCommands.ZoomIn"></MenuItem>
+                    <MenuItem Header="Zoom _Out" Command="local:CustomNotepadCommands.ZoomOut"></MenuItem>
+                    <MenuItem Header="_Restore Default Zoom" Command="local:CustomNotepadCommands.RestoreDefaultZoom"></MenuItem>
                 </MenuItem>
                 <MenuItem Name="StatusBar" Header="_Status Bar" IsCheckable="True" IsChecked="True" Checked="StatusBar_Checked" Unchecked="StatusBar_Unchecked"></MenuItem>
             </MenuItem>
@@ -163,7 +169,7 @@
                        Background="LightGray"></Separator>
 
             <!-- Status bar item for displaying zoom level -->
-            <StatusBarItem Grid.Column="4"
+            <StatusBarItem Grid.Column="4" Name="ZoomPercentage"
                            HorizontalAlignment="Right"
                            Width="60">100%</StatusBarItem>
 
