@@ -89,7 +89,7 @@
 
             <!-- Format menu -->
             <MenuItem Header="F_ormat">
-                <MenuItem Header="_Word Wrap"></MenuItem>
+                <MenuItem Name="WordWrap" Header="_Word Wrap" Checked="WordWrap_Checked" Unchecked="WordWrap_Unchecked"></MenuItem>
                 <MenuItem Header="_Font..."></MenuItem>
             </MenuItem>
 
@@ -100,7 +100,7 @@
                     <MenuItem Header="Zoom _Out"></MenuItem>
                     <MenuItem Header="_Restore Default Zoom"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Status Bar"></MenuItem>
+                <MenuItem Name="StatusBar" Header="_Status Bar" IsCheckable="True" IsChecked="True" Checked="StatusBar_Checked" Unchecked="StatusBar_Unchecked"></MenuItem>
             </MenuItem>
 
             <!-- Help menu -->

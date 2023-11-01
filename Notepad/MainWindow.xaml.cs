@@ -530,6 +530,32 @@ namespace Notepad
 
         #endregion
 
+        #region View Menu Command's Code Implementation
+
+        /// <summary>
+        /// Shows the status bar if it is not null.
+        /// </summary>
+        private void StatusBar_Checked(object sender, RoutedEventArgs e)
+        {
+            // Check if the status bar element is not null.
+            if (NotepadStatusBar != null)
+            {
+                // Set the visibility of the status bar to be visible.
+                NotepadStatusBar.Visibility = Visibility.Visible;
+            }
+        }
+
+        /// <summary>
+        /// Hides the status bar by setting its visibility to collapsed.
+        /// </summary>
+        private void StatusBar_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Set the visibility of the status bar to be collapsed, hiding it.
+            NotepadStatusBar.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
         #region TextArea and StausBar Functionality
 
         /// <summary>
@@ -591,6 +617,7 @@ namespace Notepad
             // Display the cursor's position.
             CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
         }
+
 
         #endregion
 
