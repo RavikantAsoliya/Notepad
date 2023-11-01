@@ -424,5 +424,53 @@
     </Style>
 
     <!--#endregion-->
+
+    <!--#region ContextMenu-->
+
+    <Style TargetType="{x:Type ContextMenu}" x:Key="CustomContextMenuStyling">
+        <!-- Ensure sub-pixel rendering and snapping to device pixels. -->
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <!-- Override the default style of the ContextMenu. -->
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <!-- Enable shared size scope for grid-based layout. -->
+        <Setter Property="Grid.IsSharedSizeScope" Value="true" />
+        <!-- Enable a drop shadow for the context menu. -->
+        <Setter Property="HasDropShadow" Value="True" />
+        <!-- Set font properties to system menu font resources. -->
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border x:Name="Border"
+                        Background="{StaticResource Menu.Static.Background}"
+                        BorderThickness="1" Margin="2">
+                        <!-- Apply a drop shadow effect to the menu. -->
+                        <Border.Effect>
+                            <DropShadowEffect Color="gray" ShadowDepth="10" BlurRadius="5" Opacity="0.5"/>
+                        </Border.Effect>
+                        <!-- Set the border brush for the menu. -->
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#cccccc" />
+                        </Border.BorderBrush>
+                        <StackPanel IsItemsHost="True"
+                                KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Adjust padding and corner radius if drop shadow is enabled. -->
+                        <Trigger Property="HasDropShadow" Value="true">
+                            <Setter TargetName="Border" Property="Padding" Value="0,3,0,3" />
+                            <Setter TargetName="Border" Property="CornerRadius" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+    
     
 </ResourceDictionary>

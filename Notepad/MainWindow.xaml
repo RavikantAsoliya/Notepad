@@ -317,6 +317,64 @@
                  FontFamily="Calibri" FontSize="16" FontWeight="Regular" FontStretch="Normal" FontStyle="Normal"
                  AcceptsReturn="True" AcceptsTab="True" Margin="5, 0, 0, 0"
                  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" TextChanged="TextArea_TextChanged">
+            <TextBox.ContextMenu>
+                <ContextMenu Name="CustomContextMenu" Style="{DynamicResource CustomContextMenuStyling}">
+                    <MenuItem Header="_Undo" Command="ApplicationCommands.Undo" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe7a7;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Redo" Command="ApplicationCommands.Redo" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe7a6;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Cu_t" Command="ApplicationCommands.Cut" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe8c6;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Copy" Command="ApplicationCommands.Copy" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe8c8;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Paste" Command="ApplicationCommands.Paste" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe77f;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="De_lete" Command="ApplicationCommands.Delete" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe74d;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Select _All" Command="ApplicationCommands.SelectAll" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe8b3;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Name="ContextMenuItemRightToLeftReadingOrder" Header="Right to left Reading order" IsCheckable="True">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe8e2;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Show Unicode control characters"></MenuItem>
+                    <MenuItem Header="insert Unicode control characters"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Open IME"></MenuItem>
+                    <MenuItem Header="Reconversion" IsEnabled="False"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="_Search with Bing..." Command="local:CustomNotepadCommands.SearchWithBing" InputGestureText=" ">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xf6fa;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </TextBox.ContextMenu>
         </TextBox>
 
         <!-- Status Bar at the bottom, occupying the third row of the main grid -->
