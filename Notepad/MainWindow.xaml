@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Notepad.Commands_Binding" 
         mc:Ignorable="d"
         Title="Untitled - Notepad" Height="450" Width="800"
-        ResizeMode="CanResizeWithGrip" Closing="Window_Closing">
+        ResizeMode="CanResizeWithGrip" Closing="Window_Closing"
+        Topmost="True">
     <Window.CommandBindings>
         
         <!-- Built-in WPF Commands -->
@@ -58,68 +59,262 @@
 
         <!-- Menu bar at the top -->
         <Menu Style="{DynamicResource MenuBarStyle}" Name="Menubar" Grid.Row="0">
+            
             <!-- File menu -->
             <MenuItem Header="_File">
-                <MenuItem Header="_New" Command="ApplicationCommands.New"></MenuItem>
-                <MenuItem Header="New _Window" Command="local:CustomNotepadCommands.NewWindow"></MenuItem>
-                <MenuItem Header="_Open" Command="ApplicationCommands.Open"></MenuItem>
-                <MenuItem Header="_Save" Command="ApplicationCommands.Save"></MenuItem>
-                <MenuItem Header="Save _As" Command="local:CustomNotepadCommands.SaveAs"></MenuItem>
+                <!-- New File -->
+                <MenuItem Header="_New" Command="ApplicationCommands.New">
+                    <MenuItem.Icon>
+                        <!-- Icon: New File -->
+                        <TextBlock Text="&#xf56e;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- New Window -->
+                <MenuItem Header="New _Window" Command="local:CustomNotepadCommands.NewWindow">
+                    <MenuItem.Icon>
+                        <!-- Icon: New Window -->
+                        <TextBlock Text="&#xe78b;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Open File -->
+                <MenuItem Header="_Open" Command="ApplicationCommands.Open">
+                    <MenuItem.Icon>
+                        <!-- Icon: Open File -->
+                        <TextBlock Text="&#xe8e5;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Save File -->
+                <MenuItem Header="_Save" Command="ApplicationCommands.Save">
+                    <MenuItem.Icon>
+                        <!-- Icon: Save -->
+                        <TextBlock Text="&#xe78c;" FontFamily="Segoe Fluent Icons" FontSize="17"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Save As -->
+                <MenuItem Header="Save _As" Command="local:CustomNotepadCommands.SaveAs">
+                    <MenuItem.Icon>
+                        <!-- Icon: Save As -->
+                        <TextBlock Text="&#xe792;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="Page Set_up" Name="PageSetup" Click="PageSetup_Click"></MenuItem>
-                <MenuItem Header="_Print" Command="ApplicationCommands.Print"></MenuItem>
+                <!-- Page Setup -->
+                <MenuItem Header="Page Set_up" Name="PageSetup" Click="PageSetup_Click">
+                    <MenuItem.Icon>
+                        <!-- Icon: Page Setup -->
+                        <TextBlock Text="&#xf573;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Print File -->
+                <MenuItem Header="_Print" Command="ApplicationCommands.Print">
+                    <MenuItem.Icon>
+                        <!-- Icon: Print -->
+                        <TextBlock Text="&#xf56d;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="E_xit" Name="Exit" Click="Exit_Click"></MenuItem>
+                <!-- Exit Application -->
+                <MenuItem Header="E_xit" Name="Exit" Click="Exit_Click">
+                    <MenuItem.Icon>
+                        <!-- Icon: Error -->
+                        <TextBlock Text="&#xea39;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
             <!-- Edit menu -->
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Undo" Command="ApplicationCommands.Undo"></MenuItem>
-                <MenuItem Header="Redo" Command="ApplicationCommands.Redo"></MenuItem>
+                <!-- Undo -->
+                <MenuItem Header="_Undo" Command="ApplicationCommands.Undo">
+                    <MenuItem.Icon>
+                        <!-- Icon: Undo -->
+                        <TextBlock Text="&#xe7a7;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Redo -->
+                <MenuItem Header="Redo" Command="ApplicationCommands.Redo">
+                    <MenuItem.Icon>
+                        <!-- Icon: Redo -->
+                        <TextBlock Text="&#xe7a6;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="Cu_t" Command="ApplicationCommands.Cut"></MenuItem>
-                <MenuItem Header="_Copy" Command="ApplicationCommands.Copy"></MenuItem>
-                <MenuItem Header="_Paste" Command="ApplicationCommands.Paste"></MenuItem>
-                <MenuItem Header="De_lete" Command="ApplicationCommands.Delete"></MenuItem>
+                <!-- Cut -->
+                <MenuItem Header="Cu_t" Command="ApplicationCommands.Cut">
+                    <MenuItem.Icon>
+                        <!-- Icon: Cut -->
+                        <TextBlock Text="&#xe8c6;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Copy -->
+                <MenuItem Header="_Copy" Command="ApplicationCommands.Copy">
+                    <MenuItem.Icon>
+                        <!-- Icon: Copy -->
+                        <TextBlock Text="&#xe8c8;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Paste -->
+                <MenuItem Header="_Paste" Command="ApplicationCommands.Paste">
+                    <MenuItem.Icon>
+                        <!-- Icon: Paste -->
+                        <TextBlock Text="&#xe77f;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Delete -->
+                <MenuItem Header="De_lete" Command="ApplicationCommands.Delete">
+                    <MenuItem.Icon>
+                        <!-- Icon: Delete -->
+                        <TextBlock Text="&#xe74d;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Search with Bing..." Command="local:CustomNotepadCommands.SearchWithBing"></MenuItem>
-                <MenuItem Header="_Find" Command="ApplicationCommands.Find"></MenuItem>
-                <MenuItem Header="Find _Next" Command="local:CustomNotepadCommands.FindNext"></MenuItem>
-                <MenuItem Header="Find Pre_vious" Command="local:CustomNotepadCommands.FindPrevious"></MenuItem>
-                <MenuItem Header="_Replace..." Command="ApplicationCommands.Replace"></MenuItem>
-                <MenuItem Header="_Go To..." Command="local:CustomNotepadCommands.GoTo"></MenuItem>
+                <!-- Search with Bing -->
+                <MenuItem Header="_Search with Bing..." Command="local:CustomNotepadCommands.SearchWithBing">
+                    <MenuItem.Icon>
+                        <!-- Icon: Bing Search -->
+                        <TextBlock Text="&#xf6fa;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Find -->
+                <MenuItem Header="_Find" Command="ApplicationCommands.Find">
+                    <MenuItem.Icon>
+                        <!-- Icon: Find -->
+                        <TextBlock Text="&#xf78b;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Find Next -->
+                <MenuItem Header="Find _Next" Command="local:CustomNotepadCommands.FindNext">
+                    <MenuItem.Icon>
+                        <!-- No Icon Specified, I will add it later. -->
+                        <TextBlock Text="" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Find Previous -->
+                <MenuItem Header="Find Pre_vious" Command="local:CustomNotepadCommands.FindPrevious">
+                    <MenuItem.Icon>
+                        <!-- No Icon Specified, I will add it later. -->
+                        <TextBlock Text="" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Replace -->
+                <MenuItem Header="_Replace..." Command="ApplicationCommands.Replace">
+                    <MenuItem.Icon>
+                        <!-- Icon: Replace -->
+                        <TextBlock Text="&#xe8ee;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Go To -->
+                <MenuItem Header="_Go To..." Command="local:CustomNotepadCommands.GoTo">
+                    <MenuItem.Icon>
+                        <!-- Icon: Go To -->
+                        <TextBlock Text="&#xe847;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="Select _All" Command="ApplicationCommands.SelectAll"></MenuItem>
-                <MenuItem Header="Time/_Date" Command="local:CustomNotepadCommands.TimeDate"></MenuItem>
+                <!-- Select All -->
+                <MenuItem Header="Select _All" Command="ApplicationCommands.SelectAll">
+                    <MenuItem.Icon>
+                        <!-- Icon: Select All -->
+                        <TextBlock Text="&#xe8b3;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Time/Date -->
+                <MenuItem Header="Time/_Date" Command="local:CustomNotepadCommands.TimeDate">
+                    <MenuItem.Icon>
+                        <!-- Icon: Time and Date -->
+                        <TextBlock Text="&#xec92;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
             <!-- Format menu -->
             <MenuItem Header="F_ormat">
-                <MenuItem Name="WordWrap" Header="_Word Wrap" Checked="WordWrap_Checked" Unchecked="WordWrap_Unchecked"></MenuItem>
-                <MenuItem Header="_Font..."></MenuItem>
+                <!-- Word Wrap -->
+                <MenuItem Name="WordWrap" Header="_Word Wrap" IsCheckable="True" Checked="WordWrap_Checked" Unchecked="WordWrap_Unchecked">
+                    <MenuItem.Icon>
+                        <!-- Icon: Word Wrap -->
+                        <TextBlock Text="&#xf000;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Font Settings -->
+                <MenuItem Header="_Font...">
+                    <MenuItem.Icon>
+                        <!-- Icon: Font Settings -->
+                        <TextBlock Text="&#xe8d2;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
             <!-- View menu -->
             <MenuItem Header="_View">
+                <!-- Zoom Submenu -->
                 <MenuItem Header="_Zoom">
-                    <MenuItem Header="Zoom _In" Command="local:CustomNotepadCommands.ZoomIn"></MenuItem>
-                    <MenuItem Header="Zoom _Out" Command="local:CustomNotepadCommands.ZoomOut"></MenuItem>
-                    <MenuItem Header="_Restore Default Zoom" Command="local:CustomNotepadCommands.RestoreDefaultZoom"></MenuItem>
+                    <MenuItem.Icon>
+                        <!-- Icon: Zoom -->
+                        <TextBlock Text="&#xece8;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                    <!-- Zoom In Command -->
+                    <MenuItem Header="Zoom _In" Command="local:CustomNotepadCommands.ZoomIn">
+                        <MenuItem.Icon>
+                            <!-- Icon: Zoom In -->
+                            <TextBlock Text="&#xe8a3;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <!-- Zoom Out Command -->
+                    <MenuItem Header="Zoom _Out" Command="local:CustomNotepadCommands.ZoomOut">
+                        <MenuItem.Icon>
+                            <!-- Icon: Zoom Out -->
+                            <TextBlock Text="&#xe71f;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <!-- Restore Default Zoom Command -->
+                    <MenuItem Header="_Restore Default Zoom" Command="local:CustomNotepadCommands.RestoreDefaultZoom">
+                        <MenuItem.Icon>
+                            <!-- Icon: Restore Default Zoom -->
+                            <TextBlock Text="&#xe71e;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Name="StatusBar" Header="_Status Bar" IsCheckable="True" IsChecked="True" Checked="StatusBar_Checked" Unchecked="StatusBar_Unchecked"></MenuItem>
+                <!-- Status Bar -->
+                <MenuItem Name="StatusBar" Header="_Status Bar" IsCheckable="True" IsChecked="True" Checked="StatusBar_Checked" Unchecked="StatusBar_Unchecked">
+                    <MenuItem.Icon>
+                        <!-- Icon: Status Bar -->
+                        <TextBlock Text="&#xed1a;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
             <!-- Help menu -->
             <MenuItem Header="_Help">
-                <MenuItem Header="View _Help"></MenuItem>
-                <MenuItem Header="Send _Feedback"></MenuItem>
+                <!-- View Help -->
+                <MenuItem Header="View _Help">
+                    <MenuItem.Icon>
+                        <!-- Icon: Help -->
+                        <TextBlock Text="&#xe897;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Send Feedback -->
+                <MenuItem Header="Send _Feedback">
+                    <MenuItem.Icon>
+                        <!-- Icon: Feedback -->
+                        <TextBlock Text="&#xed15;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator/>
-                <MenuItem Header="_About Notepad"></MenuItem>
+                <!-- About Notepad -->
+                <MenuItem Header="_About Notepad">
+                    <MenuItem.Icon>
+                        <!-- Icon: About Notepad -->
+                        <TextBlock Text="&#xe9ce;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
+
         </Menu>
 
         <!-- TextBox for text input, occupies the second row of the main grid -->
         <TextBox Style="{DynamicResource TextAreaStyle}" Grid.Row="1" Name="TextArea"
+                 FontFamily="Calibri" FontSize="16" FontWeight="Regular" FontStretch="Normal" FontStyle="Normal"
                  AcceptsReturn="True" AcceptsTab="True" Margin="5, 0, 0, 0"
                  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" TextChanged="TextArea_TextChanged">
         </TextBox>
