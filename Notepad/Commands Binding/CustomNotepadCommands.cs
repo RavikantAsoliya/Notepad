@@ -48,6 +48,21 @@ namespace Notepad.Commands_Binding
         /// </summary>
         public static RoutedUICommand TimeDate { get; private set; }
 
+        /// <summary>
+        /// Represents a custom command to zoom in the text content.
+        /// </summary>
+        public static RoutedUICommand ZoomIn { get; private set; }
+
+        /// <summary>
+        /// Represents a custom command to zoom out the text content.
+        /// </summary>
+        public static RoutedUICommand ZoomOut { get; private set; }
+
+        /// <summary>
+        /// Represents a custom command to restore the default zoom level.
+        /// </summary>
+        public static RoutedUICommand RestoreDefaultZoom { get; private set; }
+
         static CustomNotepadCommands()
         {
             // Create a custom command to open a new window with the key gesture Ctrl+Shift+N
@@ -92,6 +107,26 @@ namespace Notepad.Commands_Binding
                 new KeyGesture(Key.F5, ModifierKeys.None, "F5")
             });
 
+            // Create a custom command for zooming in the text content with the key gesture Ctrl+Plus
+            ZoomIn = new RoutedUICommand("Zoom In", "ZoomIn", typeof(CustomNotepadCommands), new InputGestureCollection
+            {
+                new KeyGesture(Key.Add, ModifierKeys.Control, "Ctrl+Plus"),    // Ctrl + Plus Key
+                new KeyGesture(Key.OemPlus, ModifierKeys.Control, "Ctrl+Plus")  // Ctrl + Plus on Numpad
+            });
+
+            // Create a custom command for zooming out the text content with the key gesture Ctrl+Minus
+            ZoomOut = new RoutedUICommand("Zoom Out", "ZoomOut", typeof(CustomNotepadCommands), new InputGestureCollection
+            {
+                new KeyGesture(Key.Subtract, ModifierKeys.Control, "Ctrl+Minus"),    // Ctrl + Minus Key
+                new KeyGesture(Key.OemMinus, ModifierKeys.Control, "Ctrl+Minus")    // Ctrl + Minus on Numpad
+            });
+
+            // Create a custom command to restore the default zoom level with the key gesture Ctrl+0
+            RestoreDefaultZoom = new RoutedUICommand("Restore Default Zoom", "RestoreDefaultZoom", typeof(CustomNotepadCommands), new InputGestureCollection
+            {
+                new KeyGesture(Key.D0, ModifierKeys.Control, "Ctrl+0"),         // Ctrl + 0 Key
+                new KeyGesture(Key.NumPad0, ModifierKeys.Control, "Ctrl+0")    // Ctrl + 0 on Numpad
+            });
         }
     }
 }
