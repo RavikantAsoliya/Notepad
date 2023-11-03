@@ -883,6 +883,28 @@ namespace Notepad
             }
         }
 
+        /// <summary>
+        /// Handles the Checked event to set the window to be always on top.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        private void AlwaysOnTop_Checked(object sender, RoutedEventArgs e)
+        {
+            // Set the window to be always on top
+            Topmost = true;
+        }
+
+        /// <summary>
+        /// Handles the Unchecked event to disable the "always on top" behavior of the window.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        private void AlwaysOnTop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Disable the "always on top" behavior of the window
+            Topmost = false;
+        }
+
 
         #endregion
 

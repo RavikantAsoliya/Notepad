@@ -336,7 +336,7 @@
                         <TextBlock Text="&#xed1a;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Always On Top" Name="AlwaysOnTop" IsCheckable="True">
+                <MenuItem Header="Always On Top" Name="AlwaysOnTop" IsCheckable="True" Checked="AlwaysOnTop_Checked" Unchecked="AlwaysOnTop_Unchecked">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xe718;" FontFamily="Segoe Fluent Icons" FontSize="16" Foreground="Black"></TextBlock>
                     </MenuItem.Icon>
