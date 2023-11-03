@@ -22,7 +22,7 @@ This Notepad application is a functional and feature-rich text editor built usin
 
 ## Installation
 
-1. Clone this repository to your local machine: `git clone https://github.com/your-username/your-notepad-repo.git`
+1. Clone this repository to your local machine: `git clone https://github.com/RavikantAsoliya/Notepad.git`
 
 2. Build the project using Visual Studio or your preferred development environment.
 
