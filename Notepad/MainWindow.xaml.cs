@@ -70,6 +70,7 @@ namespace Notepad
         {
             InitializeComponent();
             TextArea.Focus();
+            FilePathStatusBar.Content = "Untitled Document";
             currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
             textFinder = new TextFinder(ref TextArea);
         }
@@ -102,6 +103,9 @@ namespace Notepad
 
             // Create a new empty document.
             CreateNewDocument();
+
+            // Update Status Bar
+            FilePathStatusBar.Content = "Untitled Document";
         }
 
         /// <summary>
@@ -186,6 +190,9 @@ namespace Notepad
 
             // Open an existing text document using the OpenFile method.
             OpenFile();
+
+            // Update Status Bar
+            FilePathStatusBar.Content = FilePath;
         }
 
         /// <summary>
@@ -803,6 +810,79 @@ namespace Notepad
             // Disable spell checking.
             TextArea.SpellCheck.IsEnabled = false;
         }
+
+        /// <summary>
+        /// Opens the file's location in the file explorer if it exists; otherwise, displays an error message.
+        /// </summary>
+        private void ShowFileInFileExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(FilePath))
+            {
+                // Open the file's location in the file explorer.
+                Process.Start("explorer.exe", $"/select, \"{FilePath}\"");
+            }
+            else
+            {
+                // Show an error message if the file does not exist.
+                System.Windows.MessageBox.Show("Please save the file first", "Notepad", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Shows the file path in the status bar if the file exists; otherwise, displays "Untitled Document."
+        /// </summary>
+        private void ShowFilePath_Checked(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(FilePath))
+            {
+                // Set the status bar content to the file path.
+                FilePathStatusBar.Content = FilePath;
+            }
+            else
+            {
+                // Set the status bar content to "Untitled Document" if the file does not exist.
+                FilePathStatusBar.Content = "Untitled Document";
+            }
+
+            // Make the status bar visible.
+            FilePathStatusBar.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Hides the file path in the status bar.
+        /// </summary>
+        private void ShowFilePath_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Hide the status bar content.
+            FilePathStatusBar.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Inserts the file path or "[Untitled Document]" at the cursor position or replaces the selected text with it.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        private void InsertFilePath_Click(object sender, RoutedEventArgs e)
+        {
+            // Determine the text to insert based on whether the file exists or not.
+            string textToInsert = File.Exists(FilePath) ? FilePath : "[Untitled Document]";
+
+            // Check if there is selected text in the TextArea.
+            if (TextArea.SelectedText.Length > 0)
+            {
+                // Replace the selected text with the determined text.
+                TextArea.SelectedText = textToInsert;
+            }
+            else
+            {
+                // Get the cursor position.
+                int cursorPosition = TextArea.SelectionStart;
+
+                // Insert the determined text at the cursor position.
+                TextArea.Text = TextArea.Text.Insert(cursorPosition, textToInsert);
+            }
+        }
+
 
         #endregion
 

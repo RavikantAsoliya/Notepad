@@ -293,17 +293,17 @@
                     <MenuItem.Icon>
                         <TextBlock Text="&#xe756;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                     </MenuItem.Icon>
-                    <MenuItem Header="Show File Path" Name="ShowFilePath" IsCheckable="True">
+                    <MenuItem Header="Show File Path" Name="ShowFilePath" IsCheckable="True" Checked="ShowFilePath_Checked" Unchecked="ShowFilePath_Unchecked">
                         <MenuItem.Icon>
                             <TextBlock Text="&#xe756;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="File Path" Name="InsertFilePath">
+                    <MenuItem Header="File Path" Name="InsertFilePath" Click="InsertFilePath_Click">
                         <MenuItem.Icon>
                             <TextBlock Text="&#xf413;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Show File in File Explorer" Name="ShowFileInFileExplore">
+                    <MenuItem Header="Show File in File Explorer" Name="ShowFileInFileExplore" Click="ShowFileInFileExplorer_Click">
                         <MenuItem.Icon>
                             <TextBlock Text="&#xE8A7;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                         </MenuItem.Icon>
