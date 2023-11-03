@@ -276,7 +276,7 @@
                 
                 <Separator></Separator>
                 <!--Hide Both ScrollBars (Vertical and Horizontal)-->
-                <MenuItem Header="Hide Scrollbars" Name="HideScrollbars" IsCheckable="True">
+                <MenuItem Header="Hide Scrollbars" Name="HideScrollbars" IsCheckable="True" Checked="HideScrollbarsMenuItem_Checked" Unchecked="HideScrollbarsMenuItem_Unchecked">
                     <MenuItem.Icon>
                         <!-- Icon: ScrollBars -->
                         <TextBlock Text="&#xece7;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
@@ -461,7 +461,7 @@
             <!-- Status Bar Items -->
 
             <!-- Status bar item for displaying file path (hidden by default) -->
-            <StatusBarItem Grid.Column="0" Name="FilePathStatusBarItem"
+            <StatusBarItem Grid.Column="0" Name="FilePathStatusBar"
                            HorizontalAlignment="Left"
                            Visibility="Hidden"></StatusBarItem>
 

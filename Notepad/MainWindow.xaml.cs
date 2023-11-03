@@ -43,6 +43,10 @@ namespace Notepad
         /// </summary>
         public bool ShouldSave { get; set; } = false;
 
+        /// <summary>
+        /// Indicates whether WordWrap is checked in the menu.
+        /// </summary>
+        private bool IsWordWrapChecked { get; set; } = false;
 
         readonly double currentFontSize; // Declare a variable to store the current font size.
 
@@ -749,6 +753,40 @@ namespace Notepad
             // Set the visibility of the status bar to be collapsed, hiding it.
             NotepadStatusBar.Visibility = Visibility.Collapsed;
         }
+
+        #region Additional Features Implementation
+
+        /// <summary>
+        /// Handles the Checked event for hiding scrollbars. 
+        /// </summary>
+        private void HideScrollbarsMenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+            // Store the current state of WordWrap.
+            IsWordWrapChecked = WordWrap.IsChecked;
+
+            // Ensure WordWrap is checked.
+            if (!IsWordWrapChecked)
+                WordWrap.IsChecked = true;
+
+            // Hide vertical scrollbars and disable WordWrap menu item.
+            TextArea.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            WordWrap.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Handles the Unchecked event for showing scrollbars.
+        /// </summary>
+        private void HideScrollbarsMenuItem_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Restore the previous state of WordWrap.
+            WordWrap.IsChecked = IsWordWrapChecked;
+
+            // Enable WordWrap menu item and show vertical scrollbars.
+            WordWrap.IsEnabled = true;
+            TextArea.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        }
+
+        #endregion
 
         #endregion
 
