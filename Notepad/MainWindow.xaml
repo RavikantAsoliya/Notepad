@@ -30,9 +30,9 @@
         <!-- Custom command "SearchWithBing" to search with Bing -->
         <CommandBinding x:Name="SearchWithBing" Command="local:CustomNotepadCommands.SearchWithBing" CanExecute="SearchWithBing_CanExecute" Executed="SearchWithBing_Executed"/>
         <!-- Custom command "FindNext" to find the next occurrence -->
-        <CommandBinding x:Name="FindNext" Command="local:CustomNotepadCommands.FindNext" CanExecute="Find_CanExecute"/>
+        <CommandBinding x:Name="FindNext" Command="local:CustomNotepadCommands.FindNext" CanExecute="Find_CanExecute" Executed="FindNext_Executed"/>
         <!-- Custom command "FindPrevious" to find the previous occurrence -->
-        <CommandBinding x:Name="FindPrevious" Command="local:CustomNotepadCommands.FindPrevious" CanExecute="Find_CanExecute"/>
+        <CommandBinding x:Name="FindPrevious" Command="local:CustomNotepadCommands.FindPrevious" CanExecute="Find_CanExecute" Executed="FindPrevious_Executed"/>
         <!-- Custom command "GoTo" to navigate to a specific location -->
         <CommandBinding x:Name="GoTo" Command="local:CustomNotepadCommands.GoTo" Executed="GoTo_Executed"/>
         <!-- Custom command "TimeDate" to insert the current time and date -->
@@ -357,7 +357,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator></Separator>
-                    <MenuItem Name="ContextMenuItemRightToLeftReadingOrder" Header="Right to left Reading order" IsCheckable="True">
+                    <MenuItem Name="RightToLeftReadingOrder" Header="Right to left Reading order" IsCheckable="True" Checked="RightToLeftReadingOrder_Checked" Unchecked="RightToLeftReadingOrder_Unchecked">
                         <MenuItem.Icon>
                             <TextBlock Text="&#xe8e2;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                         </MenuItem.Icon>

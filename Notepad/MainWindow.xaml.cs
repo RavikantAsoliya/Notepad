@@ -42,15 +42,32 @@ namespace Notepad
         /// Gets or sets a flag indicating whether there are unsaved changes in the current document.
         /// </summary>
         public bool ShouldSave { get; set; } = false;
-        
 
-        double currentFontSize; // Declare a variable to store the current font size.
+
+        readonly double currentFontSize; // Declare a variable to store the current font size.
+
+        /// <summary>
+        /// Gets or sets the FindDialog, used for finding text within the application.
+        /// </summary>
+        private FindDialog findDialog;
+
+        /// <summary>
+        /// Gets or sets the ReplaceDialog, used for replacing text within the application.
+        /// </summary>
+        private ReplaceDialog replaceDialog;
+
+        /// <summary>
+        /// Gets or sets the TextFinder, responsible for text searching and manipulation.
+        /// </summary>
+        private readonly TextFinder textFinder;
+
 
         public MainWindow()
         {
             InitializeComponent();
             TextArea.Focus();
             currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
+            textFinder = new TextFinder(ref TextArea);
         }
 
         #region File Menu Command's Code Implementation
@@ -412,14 +429,118 @@ namespace Notepad
                 e.CanExecute = false; // Disallow execution if there is no text.
         }
 
+        /// <summary>
+        /// Executes the "Find" command, which opens the FindDialog to search for text in the TextArea.
+        /// If the ReplaceDialog is open, it is closed to avoid having both dialogs open simultaneously.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The executed routed event arguments.</param>
         private void Find_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Close the replace dialog if it is open.
+            if (replaceDialog != null)
+                CloseReplaceDialog();
 
+            // Close the find dialog if it is open.
+            if (findDialog == null)
+            {
+                // Create a new instance of the FindDialog with appropriate settings.
+                findDialog = new FindDialog(textFinder)
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    // Initialize the TextToFind property based on selected text (if any).
+                    TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : ""
+                };
+
+                // Dispose the dialog when it's closed.
+                findDialog.Closed += (s, args) => findDialog = null;
+
+                // Show the FindDialog.
+                findDialog.Show();
+            }
         }
 
+        /// <summary>
+        /// Closes the custom replace dialog if it is open and sets the dialog variable to null.
+        /// </summary>
+        private void CloseReplaceDialog()
+        {
+            // Check if the Replace dialog is open.
+            if (replaceDialog != null)
+            {
+                replaceDialog.Close(); // Close the replace dialog.
+                replaceDialog = null; // Set the dialog variable to null to indicate it's closed.
+            }
+        }
+
+        /// <summary>
+        /// Executes the "Find Next" command, which instructs the TextFinder to search for the next occurrence of text in the TextArea.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The executed routed event arguments.</param>
+        private void FindNext_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Set the search direction to forward and call the FindNext method from the TextFinder.
+            textFinder.Direction(findNext: true);
+            textFinder.Find();
+        }
+
+        /// <summary>
+        /// Executes the "Find Previous" command, which instructs the TextFinder to search for the previous occurrence of text in the TextArea.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The executed routed event arguments.</param>
+        private void FindPrevious_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Set the search direction to backward and call the FindNext method from the TextFinder.
+            textFinder.Direction(findNext: false);
+            textFinder.Find();
+        }
+
+        /// <summary>
+        /// Executes the "Replace" command, which opens the ReplaceDialog to search for and replace text in the TextArea.
+        /// If the FindDialog is open, it is closed to avoid having both dialogs open simultaneously.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The executed routed event arguments.</param>
         private void Replace_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            // Close the find dialog if it is open.
+            if (findDialog != null)
+                CloseFindDialog();
 
+            // Close the replace dialog if it is open.
+            if (replaceDialog == null)
+            {
+                // Create a new instance of the ReplaceDialog with appropriate settings.
+                replaceDialog = new ReplaceDialog(textFinder)
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    // Initialize the TextToFind property based on selected text (if any).
+                    TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : ""
+                };
+
+                // Dispose the dialog when it's closed.
+                replaceDialog.Closed += (s, args) => replaceDialog = null;
+
+                // Show the ReplaceDialog.
+                replaceDialog.Show();
+            }
+        }
+
+        /// <summary>
+        /// Closes the custom Find dialog if it is open.
+        /// </summary>
+        private void CloseFindDialog()
+        {
+            // Check if the Find dialog is open.
+            if (findDialog != null)
+            {
+                findDialog.Close(); // Close the Find dialog.
+                findDialog = null; // Set the reference to null to indicate that it's closed.
+            }
         }
 
         /// <summary>
@@ -691,6 +812,31 @@ namespace Notepad
             CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
         }
 
+        /// <summary>
+        /// Handles the Checked event of the right-to-left reading order context menu item.
+        /// Sets the text area's flow direction to RightToLeft for right-to-left reading order 
+        /// and maintains the custom context menu's flow direction as LeftToRight for consistency.
+        /// </summary>
+        private void RightToLeftReadingOrder_Checked(object sender, RoutedEventArgs e)
+        {
+            // Set the text area's flow direction to RightToLeft for right-to-left reading order.
+            TextArea.FlowDirection = System.Windows.FlowDirection.RightToLeft;
+            // Set the custom context menu's flow direction to LeftToRight to maintain consistency.
+            CustomContextMenu.FlowDirection = System.Windows.FlowDirection.LeftToRight;
+        }
+
+        /// <summary>
+        /// Handles the Unchecked event of the right-to-left reading order context menu item.
+        /// Reverts the text area's flow direction to LeftToRight and ensures the custom context
+        /// menu's flow direction remains as LeftToRight for consistency.
+        /// </summary>
+        private void RightToLeftReadingOrder_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Revert the text area's flow direction to the default, which is LeftToRight.
+            TextArea.FlowDirection = System.Windows.FlowDirection.LeftToRight;
+            // Restore the custom context menu's flow direction to LeftToRight for consistency.
+            CustomContextMenu.FlowDirection = System.Windows.FlowDirection.LeftToRight;
+        }
 
 
         #endregion

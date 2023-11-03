@@ -70,8 +70,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TextFinder.cs" />
+    <Compile Include="Windows\FindDialog.xaml.cs">
+      <DependentUpon>FindDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GoToDialog.xaml.cs">
       <DependentUpon>GoToDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ReplaceDialog.xaml.cs">
+      <DependentUpon>ReplaceDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SaveMessageBox.xaml.cs">
       <DependentUpon>SaveMessageBox.xaml</DependentUpon>
@@ -93,7 +100,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\FindDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\GoToDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ReplaceDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
