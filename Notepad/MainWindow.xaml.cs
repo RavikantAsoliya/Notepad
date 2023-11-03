@@ -759,7 +759,7 @@ namespace Notepad
         /// <summary>
         /// Handles the Checked event for hiding scrollbars. 
         /// </summary>
-        private void HideScrollbarsMenuItem_Checked(object sender, RoutedEventArgs e)
+        private void HideScrollbars_Checked(object sender, RoutedEventArgs e)
         {
             // Store the current state of WordWrap.
             IsWordWrapChecked = WordWrap.IsChecked;
@@ -776,7 +776,7 @@ namespace Notepad
         /// <summary>
         /// Handles the Unchecked event for showing scrollbars.
         /// </summary>
-        private void HideScrollbarsMenuItem_Unchecked(object sender, RoutedEventArgs e)
+        private void HideScrollbars_Unchecked(object sender, RoutedEventArgs e)
         {
             // Restore the previous state of WordWrap.
             WordWrap.IsChecked = IsWordWrapChecked;
@@ -784,6 +784,24 @@ namespace Notepad
             // Enable WordWrap menu item and show vertical scrollbars.
             WordWrap.IsEnabled = true;
             TextArea.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        }
+
+        /// <summary>
+        /// Enables spell checking in the TextArea.
+        /// </summary>
+        private void SpellChecking_Checked(object sender, RoutedEventArgs e)
+        {
+            // Enable spell checking.
+            TextArea.SpellCheck.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Disables spell checking in the TextArea.
+        /// </summary>
+        private void SpellChecking_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Disable spell checking.
+            TextArea.SpellCheck.IsEnabled = false;
         }
 
         #endregion

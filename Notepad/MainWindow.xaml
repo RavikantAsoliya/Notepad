@@ -276,14 +276,14 @@
                 
                 <Separator></Separator>
                 <!--Hide Both ScrollBars (Vertical and Horizontal)-->
-                <MenuItem Header="Hide Scrollbars" Name="HideScrollbars" IsCheckable="True" Checked="HideScrollbarsMenuItem_Checked" Unchecked="HideScrollbarsMenuItem_Unchecked">
+                <MenuItem Header="Hide Scrollbars" Name="HideScrollbars" IsCheckable="True" Checked="HideScrollbars_Checked" Unchecked="HideScrollbars_Unchecked">
                     <MenuItem.Icon>
                         <!-- Icon: ScrollBars -->
                         <TextBlock Text="&#xece7;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                     </MenuItem.Icon>
                 </MenuItem>
                 <!-- Spell Checking -->
-                <MenuItem Header="Spell Checking" Name="SpellChecking" IsCheckable="True">
+                <MenuItem Header="Spell Checking" Name="SpellChecking" IsCheckable="True" Checked="SpellChecking_Checked" Unchecked="SpellChecking_Unchecked">
                     <MenuItem.Icon>
                         <!-- Icon: Spell Checking -->
                         <TextBlock Text="&#xf87b;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
