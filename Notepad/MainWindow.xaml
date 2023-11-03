@@ -22,26 +22,15 @@
         <CommandBinding x:Name="SelectAll" Command="ApplicationCommands.SelectAll" Executed="SelectAll_Executed"/>
 
         <!-- Custom Commands Binding -->
-        
-        <!-- Custom command "NewWindow" to open a new window -->
         <CommandBinding x:Name="NewWindow" Command="local:CustomNotepadCommands.NewWindow" Executed="NewWindow_Executed"/>
-        <!-- Custom command "SaveAs" to save a document with a different name -->
         <CommandBinding x:Name="SaveAs" Command="local:CustomNotepadCommands.SaveAs" Executed="SaveAs_Executed"/>
-        <!-- Custom command "SearchWithBing" to search with Bing -->
         <CommandBinding x:Name="SearchWithBing" Command="local:CustomNotepadCommands.SearchWithBing" CanExecute="SearchWithBing_CanExecute" Executed="SearchWithBing_Executed"/>
-        <!-- Custom command "FindNext" to find the next occurrence -->
         <CommandBinding x:Name="FindNext" Command="local:CustomNotepadCommands.FindNext" CanExecute="Find_CanExecute" Executed="FindNext_Executed"/>
-        <!-- Custom command "FindPrevious" to find the previous occurrence -->
         <CommandBinding x:Name="FindPrevious" Command="local:CustomNotepadCommands.FindPrevious" CanExecute="Find_CanExecute" Executed="FindPrevious_Executed"/>
-        <!-- Custom command "GoTo" to navigate to a specific location -->
         <CommandBinding x:Name="GoTo" Command="local:CustomNotepadCommands.GoTo" Executed="GoTo_Executed"/>
-        <!-- Custom command "TimeDate" to insert the current time and date -->
         <CommandBinding x:Name="TimeDate" Command="local:CustomNotepadCommands.TimeDate" Executed="TimeDate_Executed"/>
-        <!-- Custom command "ZoomIn" to zoom in the text content -->
         <CommandBinding x:Name="ZoomIn" Command="local:CustomNotepadCommands.ZoomIn" Executed="ZoomIn_Executed"/>
-        <!-- Custom command "ZoomOut" to zoom out the text content -->
         <CommandBinding x:Name="ZoomOut" Command="local:CustomNotepadCommands.ZoomOut" Executed="ZoomOut_Executed"/>
-        <!-- Custom command "RestoreDefaultZoom" to restore the default zoom level -->
         <CommandBinding x:Name="RestoreDefaultZoom" Command="local:CustomNotepadCommands.RestoreDefaultZoom" Executed="RestoreDefaultZoom_Executed"/>
 
     </Window.CommandBindings>
@@ -280,6 +269,76 @@
                     <MenuItem.Icon>
                         <!-- Icon: Status Bar -->
                         <TextBlock Text="&#xed1a;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                
+                <!--Adding Additional Fetures-->
+                
+                <Separator></Separator>
+                <!--Hide Both ScrollBars (Vertical and Horizontal)-->
+                <MenuItem Header="Hide Scrollbars" Name="HideScrollbars" IsCheckable="True">
+                    <MenuItem.Icon>
+                        <!-- Icon: ScrollBars -->
+                        <TextBlock Text="&#xece7;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!-- Spell Checking -->
+                <MenuItem Header="Spell Checking" Name="SpellChecking" IsCheckable="True">
+                    <MenuItem.Icon>
+                        <!-- Icon: Spell Checking -->
+                        <TextBlock Text="&#xf87b;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="File Path">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xe756;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                    </MenuItem.Icon>
+                    <MenuItem Header="Show File Path" Name="ShowFilePath" IsCheckable="True">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe756;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="File Path" Name="InsertFilePath">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xf413;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Show File in File Explorer" Name="ShowFileInFileExplore">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xE8A7;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Switch Modes">
+                    <MenuItem.Icon>
+                        <TextBlock Text="" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                    </MenuItem.Icon>
+                    <MenuItem Header="Day Mode" IsCheckable="True">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xe793;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Name="NightMode" Header="Night Mode" IsCheckable="True">
+                        <MenuItem.Icon>
+                            <TextBlock Text="&#xec46;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Auto Save" IsCheckable="True">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xf739;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Hide Menubar" Name="HideMenuBar" IsCheckable="True">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xed1a;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Always On Top" Name="AlwaysOnTop" IsCheckable="True">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#xe718;" FontFamily="Segoe Fluent Icons" FontSize="16" Foreground="Black"></TextBlock>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

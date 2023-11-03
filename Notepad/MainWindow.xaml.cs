@@ -577,17 +577,6 @@ namespace Notepad
         }
 
         /// <summary>
-        /// Executes the "Select All" command to select all text in the text area.
-        /// </summary>
-        /// <param name="sender">The sender of the command.</param>
-        /// <param name="e">The command event arguments.</param>
-        private void SelectAll_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            // Select all text in the text area.
-            TextArea.SelectAll();
-        }
-
-        /// <summary>
         /// Moves the cursor to the specified line in the text area.
         /// </summary>
         /// <param name="lineNumber">The line number to navigate to.</param>
@@ -602,6 +591,17 @@ namespace Notepad
 
             // Scroll the text area to make the selected line visible.
             TextArea.ScrollToLine(lineNumber - 1);
+        }
+
+        /// <summary>
+        /// Executes the "Select All" command to select all text in the text area.
+        /// </summary>
+        /// <param name="sender">The sender of the command.</param>
+        /// <param name="e">The command event arguments.</param>
+        private void SelectAll_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Select all text in the text area.
+            TextArea.SelectAll();
         }
 
         /// <summary>
@@ -634,6 +634,8 @@ namespace Notepad
         #endregion
 
         #region Format Menu Command's Code Implementation
+
+        // TODO: Font Dialog and Its Implementation
 
         /// <summary>
         /// Enables word wrapping for the text area.
@@ -837,7 +839,6 @@ namespace Notepad
             // Restore the custom context menu's flow direction to LeftToRight for consistency.
             CustomContextMenu.FlowDirection = System.Windows.FlowDirection.LeftToRight;
         }
-
 
         #endregion
 
