@@ -375,7 +375,8 @@
         <TextBox Style="{DynamicResource TextAreaStyle}" Grid.Row="1" Name="TextArea"
                  FontFamily="Calibri" FontSize="16" FontWeight="Regular" FontStretch="Normal" FontStyle="Normal"
                  AcceptsReturn="True" AcceptsTab="True" Margin="5, 0, 0, 0"
-                 VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" TextChanged="TextArea_TextChanged">
+                 VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
+                 TextChanged="TextArea_TextChanged" SelectionChanged="TextArea_SelectionChanged">
             <TextBox.ContextMenu>
                 <ContextMenu Name="CustomContextMenu" Style="{DynamicResource CustomContextMenuStyling}">
                     <MenuItem Header="_Undo" Command="ApplicationCommands.Undo" InputGestureText=" ">
@@ -471,7 +472,7 @@
                        Background="LightGray"></Separator>
 
             <!-- Status bar item for displaying cursor location -->
-            <StatusBarItem Grid.Column="2" Name="CursorLocationStatusBarItem"
+            <StatusBarItem Grid.Column="2" Name="LineAndColumnPosition"
                            HorizontalAlignment="Right" 
                            Width="130">Ln 1, Col 1</StatusBarItem>
 

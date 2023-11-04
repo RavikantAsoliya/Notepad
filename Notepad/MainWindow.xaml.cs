@@ -935,41 +935,35 @@ namespace Notepad
                 ShouldSave = true;
             }
 
-            // Update the cursor position display
-            GetCursorPosition();
+            // Update the line and column index in status bar
+            GetLineAndColumnPosition();
         }
 
         /// <summary>
-        /// Retrieves and displays the current cursor position in the text area.
+        /// Event handler for the selection changed event in the TextArea control.
         /// </summary>
-        private void GetCursorPosition()
+        /// <param name="sender">The event sender (TextArea).</param>
+        /// <param name="e">The event arguments.</param>
+        private void TextArea_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            int lineNumber = 1; // Initialize with the first line.
-            int columnNumber = 1;
+            // When the selection in the TextArea changes, update the displayed line and column position.
+            GetLineAndColumnPosition();
+        }
 
-            // Get the current cursor position.
-            int caretIndex = TextArea.CaretIndex;
+        /// <summary>
+        /// Updates and displays the current line and column position based on the text selection
+        /// within the TextArea control.
+        /// </summary>
+        private void GetLineAndColumnPosition()
+        {
+            // Calculate the current line index (0-based) of the selection and add 1 to display it as 1-based.
+            int line = TextArea.GetLineIndexFromCharacterIndex(TextArea.SelectionStart) + 1;
 
-            // Split the text into lines based on line breaks (e.g., "\r\n" or "\n").
-            string[] lines = TextArea.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            // Calculate the column position by subtracting the starting character index of the current line from the selection's start position, and add 1 to make it 1-based.
+            int column = TextArea.SelectionStart - TextArea.GetCharacterIndexFromLineIndex(line - 1) + 1;
 
-            // Loop through each line to find the cursor's line and column.
-            foreach (string line in lines)
-            {
-                // Check if the caret index is within the current line.
-                if (caretIndex <= line.Length)
-                {
-                    columnNumber = caretIndex + 1; // Column number is 1-based.
-                    break;
-                }
-
-                // Move to the next line.
-                caretIndex -= line.Length + Environment.NewLine.Length;
-                lineNumber++;
-            }
-
-            // Display the cursor's position.
-            CursorLocationStatusBarItem.Content = $"Ln {lineNumber}, Col {columnNumber}";
+            // Update the user interface to show the line and column position.
+            LineAndColumnPosition.Content = $"Ln {line}, Col {column}";
         }
 
         /// <summary>
@@ -998,8 +992,11 @@ namespace Notepad
             CustomContextMenu.FlowDirection = System.Windows.FlowDirection.LeftToRight;
         }
 
+
         #endregion
 
         
+
+
     }
 }
