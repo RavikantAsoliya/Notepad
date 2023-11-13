@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Notepad.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -33,6 +36,7 @@ namespace Notepad.Windows
         public SaveMessageBox()
         {
             InitializeComponent();
+            SetTheme();
         }
 
         /// <summary>
@@ -69,6 +73,18 @@ namespace Notepad.Windows
             Result = null; // Set the Result to null.
             this.Close(); // Close the window.
         }
+
+        #region Theme Management
+        [DllImport("DwmApi")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
+        private void SetTheme()
+        {
+            if (Settings.Default.DarkTheme)
+            {
+                DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(), 20, new[] { 1 }, 4);
+            }
+        }
+        #endregion
 
     }
 }

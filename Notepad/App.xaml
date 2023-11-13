@@ -8,7 +8,8 @@
             <!-- Merged resource dictionaries to define the application's styling -->
             <ResourceDictionary.MergedDictionaries>
                 <!-- Including a XAML resource file for styling (DayMode.xaml) -->
-                <ResourceDictionary Source="Templates/DayMode.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/DayMode.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/NightMode.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

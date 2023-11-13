@@ -1,4 +1,4 @@
-﻿<Window x:Class="Notepad.Windows.GoToDialog"
+﻿<Window x:Class="Notepad.Windows.GoToDialog" Style="{DynamicResource WindowStyle}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Notepad.Windows"
         mc:Ignorable="d"
         Title="Go To Line" Height="138" Width="265"
-        ResizeMode="NoResize" Loaded="Window_Loaded">
+        ResizeMode="NoResize" Loaded="Window_Loaded" Background="#2a2a2a">
     <StackPanel Margin="12,0,12,12">
-        <Label Content="Line number:"/>
-        <TextBox Name="LineNumberTextBox" Height="23" Margin="0,0,0,12" KeyDown="LineNumberTextBox_KeyDown"/>
+        <Label Name="LabelLineNumber" Content="Line number:"/>
+        <TextBox Style="{DynamicResource TextBoxStyle}" Name="LineNumberTextBox" Height="23" Margin="0,0,0,12" KeyDown="LineNumberTextBox_KeyDown"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Name="GoToButton" Content="Go To" Margin="0,0,10,0" Width="75" Height="23" Click="GoToButton_Click"/>
-            <Button Name="CancelButton" Content="Cancel" Width="75" Height="23" Click="CancelButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="GoToButton" Content="Go To" Margin="0,0,10,0" Width="75" Height="23" Click="GoToButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="CancelButton" Content="Cancel" Width="75" Height="23" Click="CancelButton_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>

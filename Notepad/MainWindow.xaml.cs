@@ -1,9 +1,12 @@
-﻿using Notepad.Windows;
+﻿using Microsoft.Win32;
+using Notepad.Properties;
+using Notepad.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -69,6 +73,7 @@ namespace Notepad
         public MainWindow()
         {
             InitializeComponent();
+            SetTheme();
             TextArea.Focus();
             FilePathStatusBar.Content = "Untitled Document";
             currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
@@ -995,8 +1000,109 @@ namespace Notepad
 
         #endregion
 
-        
+        #region Theme Management
+        [DllImport("DwmApi")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
 
+        private const string RegistryKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 
+        private const string RegistryValueName = "AppsUseLightTheme";
+        private enum WindowsTheme
+        {
+            Light,
+            Dark
+        }
+        private static WindowsTheme GetWindowsTheme()
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryKeyPath))
+            {
+                object registryValueObject = key?.GetValue(RegistryValueName);
+                if (registryValueObject == null)
+                {
+                    return WindowsTheme.Light;
+                }
+
+                int registryValue = (int)registryValueObject;
+
+                return registryValue > 0 ? WindowsTheme.Light : WindowsTheme.Dark;
+            }
+        }
+
+        private void SetTheme()
+        {
+            WindowsTheme theme = Settings.Default.DetectTheme ? GetWindowsTheme() :
+                (Settings.Default.LightTheme ? WindowsTheme.Light : WindowsTheme.Dark);
+
+            DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(),
+                theme == WindowsTheme.Light ? 19 : 20, new[] { 1 }, 4);
+
+            System.Windows.Application.Current.Resources.MergedDictionaries.Clear();
+            System.Windows.Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
+            {
+                Source = new Uri(theme == WindowsTheme.Light ? "Themes/DayMode.xaml" : "Themes/NightMode.xaml", UriKind.Relative)
+            });
+
+            Settings.Default.DetectTheme = false;
+            Settings.Default.LightTheme = theme == WindowsTheme.Light;
+            Settings.Default.DarkTheme = theme == WindowsTheme.Dark;
+            Settings.Default.Save();
+
+            DayMode.IsChecked = theme == WindowsTheme.Light;
+            NightMode.IsChecked = theme == WindowsTheme.Dark;
+        }
+
+        #endregion
+
+        private void NightMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (!NightMode.IsChecked && MessageBoxResult.OK == MessageBox.Show("Restart this application to change theme", "Notepad", MessageBoxButton.OKCancel, MessageBoxImage.Warning))
+            {
+                if (ShouldSave)
+                {
+                    bool? result = AskToSaveFile();
+                    if (result == true && File.Exists(FilePath))
+                    {
+                        SaveOldDocument();
+                    }
+                    else if (result == null || (result == true && SaveAsNewDocument() == false))
+                    {
+                        return;
+                    }
+                }
+
+                Settings.Default.DetectTheme = false;
+                Settings.Default.LightTheme = false;
+                Settings.Default.DarkTheme = true;
+                Settings.Default.Save();
+                Application.Current.Shutdown();
+                Process.Start(Application.ResourceAssembly.Location);
+            }
+        }
+
+        private void DayMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (!DayMode.IsChecked && MessageBoxResult.OK == MessageBox.Show("Restart this application to change theme", "Notepad", MessageBoxButton.OKCancel, MessageBoxImage.Warning))
+            {
+                if (ShouldSave)
+                {
+                    bool? result = AskToSaveFile();
+                    if (result == true && File.Exists(FilePath))
+                    {
+                        SaveOldDocument();
+                    }
+                    else if (result == null || (result == true && SaveAsNewDocument() == false))
+                    {
+                        return;
+                    }
+                }
+
+                Settings.Default.DetectTheme = false;
+                Settings.Default.LightTheme = true;
+                Settings.Default.DarkTheme = false;
+                Settings.Default.Save();
+                Application.Current.Shutdown();
+                Process.Start(Application.ResourceAssembly.Location);
+            }
+        }
     }
 }

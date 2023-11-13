@@ -1,4 +1,4 @@
-﻿<Window x:Class="Notepad.Windows.ReplaceDialog"
+﻿<Window x:Class="Notepad.Windows.ReplaceDialog" Style="{DynamicResource WindowStyle}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Notepad.Windows"
         mc:Ignorable="d"
         Title="Replace" Height="192" Width="361" ResizeMode="NoResize"
-        Background="#F0F0F0" Foreground="#000000" Loaded="Window_Loaded">
+        Loaded="Window_Loaded">
     <Grid Margin="10, 10, 10, 12">
         <!-- Define two columns for the grid -->
         <Grid.ColumnDefinitions>
@@ -23,31 +23,31 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Height="20" VerticalAlignment="Top">
                 <TextBlock Text="Find what:" Height="20" Width="80"/>
                 <!-- Label -->
-                <TextBox Name="FindTextBox" Width="165" Height="20" Margin="7, 0, 0, 0" TextChanged="FindTextBox_TextChanged"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" Name="FindTextBox" Width="155" Height="20" Margin="7, 0, 0, 0" TextChanged="FindTextBox_TextChanged"/>
                 <!-- Text input field -->
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Height="20">
                 <TextBlock Text="Replace with:" Height="20" Width="80"/>
                 <!-- Label -->
-                <TextBox Name="ReplaceTextBox" Width="165" Height="20" Margin="7, 0, 0, 0"/>
+                <TextBox Style="{DynamicResource TextBoxStyle}" Name="ReplaceTextBox" Width="155" Height="20" Margin="7, 0, 0, 0"/>
                 <!-- Text input field -->
             </StackPanel>
             <Grid Grid.Row="2">
                 <!-- StackPanel for checkboxes -->
                 <StackPanel VerticalAlignment="Bottom">
-                    <CheckBox Name="MatchCaseCheckBox" Content="Match case" Margin="0,0,0,11"/>
+                    <CheckBox Style="{DynamicResource CheckBoxStyle}" Name="MatchCaseCheckBox" Content="Match case" Margin="0,0,0,11"/>
                     <!-- Checkbox 1 -->
-                    <CheckBox Name="WrapAroundCheckBox" Content="Wrap around"/>
+                    <CheckBox Style="{DynamicResource CheckBoxStyle}" Name="WrapAroundCheckBox" Content="Wrap around"/>
                     <!-- Checkbox 2 -->
                 </StackPanel>
             </Grid>
         </Grid>
         <!-- StackPanel for buttons -->
         <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top">
-            <Button Name="FindNextButton" Content="Find Next" Margin="0,0,0,6" Height="21" Click="FindNextButton_Click"/>
-            <Button Name="ReplaceButton" Content="Replace" Margin="0,0,0,6" Height="21" Click="ReplaceButton_Click"/>
-            <Button Name="ReplaceAllButton" Content="Replace All" Margin="0,0,0,6" Height="21" Click="ReplaceAllButton_Click"/>
-            <Button Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="FindNextButton" Content="Find Next" Margin="0,0,0,6" Height="21" Click="FindNextButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="ReplaceButton" Content="Replace" Margin="0,0,0,6" Height="21" Click="ReplaceButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="ReplaceAllButton" Content="Replace All" Margin="0,0,0,6" Height="21" Click="ReplaceAllButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="CancelButton" Content="Cancel" Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

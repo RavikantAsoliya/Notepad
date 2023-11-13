@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Notepad.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -35,6 +38,7 @@ namespace Notepad.Windows
         public FindDialog(TextFinder finder)
         {
             InitializeComponent();
+            SetTheme();
             textFinder = finder;
             FindTextBox.Focus();
         }
@@ -109,5 +113,19 @@ namespace Notepad.Windows
             // Enable or disable the FindNextButton based on whether the text is empty.
             FindNextButton.IsEnabled = textNotEmpty;
         }
+
+        #region Theme Management
+        [DllImport("DwmApi")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
+        private void SetTheme()
+        {
+            if (Settings.Default.DarkTheme)
+            {
+                DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(), 20, new[] { 1 }, 4);
+                return;
+            }
+            this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
+        }
+        #endregion
     }
 }

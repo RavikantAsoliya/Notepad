@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Notepad.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -27,7 +30,7 @@ namespace Notepad.Windows
         public GoToDialog()
         {
             InitializeComponent();
-
+            SetTheme();
             // Set focus to the LineNumberTextBox when the dialog is loaded.
             LineNumberTextBox.Focus();
         }
@@ -96,6 +99,19 @@ namespace Notepad.Windows
             // Check if the key falls within the range of numeric keys on the main keyboard (0-9) or the numeric keypad (NumPad0-NumPad9).
             return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
         }
-
+        #region Theme Management
+        [DllImport("DwmApi")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
+        private void SetTheme()
+        {
+            if (Settings.Default.DarkTheme)
+            {
+                DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(), 20, new[] { 1 }, 4);
+                LabelLineNumber.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                return;
+            }
+            this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
+        }
+        #endregion
     }
 }
