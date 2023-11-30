@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Notepad
 {
@@ -69,16 +70,24 @@ namespace Notepad
         /// </summary>
         private readonly TextFinder textFinder;
 
+        private readonly DispatcherTimer autoSaveTimer;
 
         public MainWindow()
         {
             InitializeComponent();
-            SetTheme();
+            InitializeCurrentWindowsTheme();
             TextArea.Focus();
             FilePathStatusBar.Content = "Untitled Document";
             currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
             textFinder = new TextFinder(ref TextArea);
+            Debug.WriteLine($"Left:{Left}, Top: {Top}, Height: {Height}, Width: {Width}");
+
+            autoSaveTimer = new DispatcherTimer();
+            autoSaveTimer.Interval = TimeSpan.FromSeconds(1);
+            autoSaveTimer.Tick += AutoSaveTimer_Tick;
         }
+
+        
 
         #region File Menu Command's Code Implementation
 
@@ -336,24 +345,33 @@ namespace Notepad
         {
             // Check if the application should exit based on unsaved changes and user decisions.
             e.Cancel = !ShouldExitApplication();
+            SaveState();
         }
 
         /// <summary>
-        /// Determines whether the application should exit, taking into account unsaved changes and user decisions.
+        /// Checks whether the application should exit, considering whether to save changes.
         /// </summary>
-        /// <returns>
-        ///   <see langword="true"/> if the application should exit; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns>True if the application should exit, false otherwise.</returns>
         private bool ShouldExitApplication()
         {
-            // Check if there are unsaved changes.
-            if (!ShouldSave)
-                return true; // No changes to save, it's safe to exit.
+            // Check if there are no unsaved changes or if changes were successfully saved.
+            if (!ShouldSave || SaveChanges() == true)
+                return true;
 
-            // Prompt the user to save changes and get their choice (true for save, false for discard, null for cancel).
+            // Return false if there are unsaved changes and the user chooses not to save.
+            return false;
+        }
+
+        /// <summary>
+        /// Prompts the user to save changes and handles the response accordingly.
+        /// </summary>
+        /// <returns>True if changes were successfully saved or no changes needed saving, false otherwise.</returns>
+        private bool? SaveChanges()
+        {
+            // Ask the user whether to save changes.
             bool? result = AskToSaveFile();
 
-            // Check the user's choice.
+            // Prompt the user to save changes and get their choice (true for save, false for discard, null for cancel).
             if (result == true && File.Exists(FilePath))
             {
                 // User chose to save, and the file exists, so save the current document.
@@ -361,12 +379,11 @@ namespace Notepad
             }
             else if (result == null || (result == true && SaveAsNewDocument() == false))
             {
-                // User canceled or encountered an error while saving, or they chose not to save the current document.
+                // User canceled or encountered an error while saving, or they choose not to save the current document.
                 // In any of these cases, it's not safe to exit the application.
                 return false;
             }
-
-            // If none of the previous conditions are met, it's safe to exit.
+            // Return true if changes were successfully saved or no changes needed saving.
             return true;
         }
 
@@ -889,6 +906,73 @@ namespace Notepad
         }
 
         /// <summary>
+        /// Displays a confirmation message box for changing the application theme.
+        /// </summary>
+        /// <param name="themeName">The name of the theme being switched to.</param>
+        /// <returns>True if the user confirms the theme change; otherwise, false.</returns>
+        private bool ConfirmThemeChange(string themeName)
+        {
+            // Display a message box with a warning about the theme change.
+            MessageBoxResult result = MessageBox.Show($"Switching to {themeName} theme requires restarting the application. Continue?", "Theme Change", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+            // Return true if the user clicks OK, indicating confirmation.
+            return result == MessageBoxResult.OK;
+        }
+
+        /// <summary>
+        /// Changes the theme of the application and restarts it if necessary.
+        /// </summary>
+        /// <param name="lightTheme">True if switching to the light theme, false otherwise.</param>
+        /// <param name="darkTheme">True if switching to the dark theme, false otherwise.</param>
+        /// <param name="themeName">The name of the theme being changed to.</param>
+        private void ChangeTheme(bool lightTheme, bool darkTheme, string themeName)
+        {
+            // Check if the desired theme is already active.
+            if ((NightMode.IsChecked && darkTheme) || (DayMode.IsChecked && lightTheme))
+                return;
+
+            // Confirm the theme change with the user.
+            if (ConfirmThemeChange(themeName))
+            {
+                // Save changes and restart the application.
+                if (ShouldSave && SaveChanges() == false)
+                    return;
+
+                Settings.Default.DetectTheme = false;
+                Settings.Default.LightTheme = lightTheme;
+                Settings.Default.DarkTheme = darkTheme;
+                Settings.Default.Save();
+
+                Application.Current.Shutdown();
+                Process.Start(Application.ResourceAssembly.Location);
+            }
+        }
+
+        /// <summary>
+        /// Handles the click event for the Night Mode toggle button.
+        /// </summary>
+        /// <param name="sender">The event sender (Night Mode toggle button).</param>
+        /// <param name="e">The event arguments.</param>
+        private void NightMode_Click(object sender, RoutedEventArgs e)
+        {
+            // Check and change the theme to Night Mode.
+            if (!NightMode.IsChecked)
+                ChangeTheme(false, true, "Night");
+        }
+
+        /// <summary>
+        /// Handles the click event for the Day Mode toggle button.
+        /// </summary>
+        /// <param name="sender">The event sender (Day Mode toggle button).</param>
+        /// <param name="e">The event arguments.</param>
+        private void DayMode_Click(object sender, RoutedEventArgs e)
+        {
+            // Check and change the theme to Day Mode.
+            if (!DayMode.IsChecked)
+                ChangeTheme(true, false, "Day");
+        }
+
+        /// <summary>
         /// Handles the Checked event to set the window to be always on top.
         /// </summary>
         /// <param name="sender">The event sender.</param>
@@ -909,7 +993,6 @@ namespace Notepad
             // Disable the "always on top" behavior of the window
             Topmost = false;
         }
-
 
         #endregion
 
@@ -1001,108 +1084,136 @@ namespace Notepad
         #endregion
 
         #region Theme Management
+
+        /// <summary>
+        /// Changes the theme of the application based on user preferences.
+        /// </summary>
         [DllImport("DwmApi")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
 
+        /// <summary>
+        /// Registry key path for Windows theme settings.
+        /// </summary>
         private const string RegistryKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 
+        /// <summary>
+        /// Registry value name for Windows theme settings.
+        /// </summary>
         private const string RegistryValueName = "AppsUseLightTheme";
+
+        /// <summary>
+        /// Enum representing the available Windows themes.
+        /// </summary>
         private enum WindowsTheme
         {
             Light,
             Dark
         }
+
+        /// <summary>
+        /// Retrieves the current Windows theme from the registry.
+        /// </summary>
+        /// <returns>The current Windows theme, either Light or Dark.</returns>
         private static WindowsTheme GetWindowsTheme()
         {
+            // Open the registry key for the current user's theme settings.
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryKeyPath))
             {
+                // Retrieve the value from the registry.
                 object registryValueObject = key?.GetValue(RegistryValueName);
+
+                // If the value is not present, default to the Light theme.
                 if (registryValueObject == null)
                 {
                     return WindowsTheme.Light;
                 }
 
+                // Convert the registry value to an integer.
                 int registryValue = (int)registryValueObject;
 
+                // Return Light theme if the registry value is greater than 0, otherwise Dark theme.
                 return registryValue > 0 ? WindowsTheme.Light : WindowsTheme.Dark;
             }
         }
 
-        private void SetTheme()
+        /// <summary>
+        /// Initializes the theme of the application based on user settings.
+        /// </summary>
+        private void InitializeCurrentWindowsTheme()
         {
+            // Determine the theme based on user preferences.
             WindowsTheme theme = Settings.Default.DetectTheme ? GetWindowsTheme() :
                 (Settings.Default.LightTheme ? WindowsTheme.Light : WindowsTheme.Dark);
 
+            // Set the window attribute to enable dark or light theme.
             DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(),
                 theme == WindowsTheme.Light ? 19 : 20, new[] { 1 }, 4);
 
+            // Clear existing resource dictionaries and add the selected theme.
             System.Windows.Application.Current.Resources.MergedDictionaries.Clear();
             System.Windows.Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary
             {
                 Source = new Uri(theme == WindowsTheme.Light ? "Themes/DayMode.xaml" : "Themes/NightMode.xaml", UriKind.Relative)
             });
 
+            // Update application settings.
             Settings.Default.DetectTheme = false;
             Settings.Default.LightTheme = theme == WindowsTheme.Light;
             Settings.Default.DarkTheme = theme == WindowsTheme.Dark;
             Settings.Default.Save();
 
+            // Update theme selection checkboxes.
             DayMode.IsChecked = theme == WindowsTheme.Light;
             NightMode.IsChecked = theme == WindowsTheme.Dark;
         }
 
         #endregion
 
-        private void NightMode_Click(object sender, RoutedEventArgs e)
+        private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            if (!NightMode.IsChecked && MessageBoxResult.OK == MessageBox.Show("Restart this application to change theme", "Notepad", MessageBoxButton.OKCancel, MessageBoxImage.Warning))
-            {
-                if (ShouldSave)
-                {
-                    bool? result = AskToSaveFile();
-                    if (result == true && File.Exists(FilePath))
-                    {
-                        SaveOldDocument();
-                    }
-                    else if (result == null || (result == true && SaveAsNewDocument() == false))
-                    {
-                        return;
-                    }
-                }
-
-                Settings.Default.DetectTheme = false;
-                Settings.Default.LightTheme = false;
-                Settings.Default.DarkTheme = true;
-                Settings.Default.Save();
-                Application.Current.Shutdown();
-                Process.Start(Application.ResourceAssembly.Location);
-            }
+            RestoreState();
         }
 
-        private void DayMode_Click(object sender, RoutedEventArgs e)
+        private void RestoreState()
         {
-            if (!DayMode.IsChecked && MessageBoxResult.OK == MessageBox.Show("Restart this application to change theme", "Notepad", MessageBoxButton.OKCancel, MessageBoxImage.Warning))
-            {
-                if (ShouldSave)
-                {
-                    bool? result = AskToSaveFile();
-                    if (result == true && File.Exists(FilePath))
-                    {
-                        SaveOldDocument();
-                    }
-                    else if (result == null || (result == true && SaveAsNewDocument() == false))
-                    {
-                        return;
-                    }
-                }
+            this.Width = Settings.Default.WindowWidth;
+            this.Height = Settings.Default.WindowHeight;
+            this.Left = Settings.Default.WindowLeft;
+            this.Top = Settings.Default.WindowTop;
+        }
 
-                Settings.Default.DetectTheme = false;
-                Settings.Default.LightTheme = true;
-                Settings.Default.DarkTheme = false;
-                Settings.Default.Save();
-                Application.Current.Shutdown();
-                Process.Start(Application.ResourceAssembly.Location);
+
+        private void SaveState()
+        {
+            Settings.Default.WindowWidth = this.Width;
+            Settings.Default.WindowHeight = this.Height;
+            Settings.Default.WindowLeft = this.Left;
+            Settings.Default.WindowTop = this.Top;
+            Settings.Default.Save();
+        }
+
+        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            SaveOldDocument();
+        }
+
+        private void AutoSave_Checked(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(FilePath))
+            {
+                autoSaveTimer.Start();
             }
+            else
+            {
+                MessageBox.Show("The autosave feature cannot start as the document does not exist. Please create or load a document to enable autosave functionality.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ((MenuItem)sender).IsChecked = false;
+            }
+
+        }
+
+        private void AutoSave_Unchecked(object sender, RoutedEventArgs e)
+        {
+            autoSaveTimer.Stop();
         }
     }
 }

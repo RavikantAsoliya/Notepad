@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Notepad.Commands_Binding" 
         mc:Ignorable="d"
         Title="Untitled - Notepad" Height="450" Width="800"
-        ResizeMode="CanResizeWithGrip" Closing="Window_Closing">
+        ResizeMode="CanResizeWithGrip" Closing="Window_Closing" SourceInitialized="Window_SourceInitialized"
+        >
     <Window.CommandBindings>
         
         <!-- Built-in WPF Commands -->
@@ -324,7 +325,7 @@
                     </MenuItem>
                 </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Auto Save" IsCheckable="True">
+                <MenuItem Name="AutoSave" Header="Auto Save" IsCheckable="True" Checked="AutoSave_Checked" Unchecked="AutoSave_Unchecked">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xf739;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                     </MenuItem.Icon>
@@ -374,6 +375,7 @@
         <TextBox Style="{DynamicResource TextAreaStyle}" Grid.Row="1" Name="TextArea"
                  FontFamily="Calibri" FontSize="16" FontWeight="Regular" FontStretch="Normal" FontStyle="Normal"
                  AcceptsReturn="True" AcceptsTab="True" Padding="5, 0, 0, 0"
+                 IsInactiveSelectionHighlightEnabled="True" SelectionBrush="Black"
                  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
                  TextChanged="TextArea_TextChanged" SelectionChanged="TextArea_SelectionChanged">
             <TextBox.ContextMenu>

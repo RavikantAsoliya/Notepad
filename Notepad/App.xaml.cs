@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Notepad.Properties;
 
 namespace Notepad
 {
@@ -13,5 +14,13 @@ namespace Notepad
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // Load settings on startup
+            //Notepad.Properties.Settings.Default.Reset();
+            Notepad.Properties.Settings.Default.Reload();
+        }
     }
 }
