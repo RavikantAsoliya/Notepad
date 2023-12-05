@@ -1,4 +1,5 @@
-﻿using Notepad.Properties;
+﻿using Notepad.Helper;
+using Notepad.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,6 +100,12 @@ namespace Notepad.Windows
             // Check if the key falls within the range of numeric keys on the main keyboard (0-9) or the numeric keypad (NumPad0-NumPad9).
             return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
         }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
+        }
+
         #region Theme Management
         [DllImport("DwmApi")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);

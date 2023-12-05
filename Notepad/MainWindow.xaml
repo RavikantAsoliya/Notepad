@@ -1,4 +1,4 @@
-﻿<Window x:Class="Notepad.MainWindow" Style="{DynamicResource WindowStyle}"
+﻿<Window x:Class="Notepad.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -377,7 +377,8 @@
                  AcceptsReturn="True" AcceptsTab="True" Padding="5, 0, 0, 0"
                  IsInactiveSelectionHighlightEnabled="True" SelectionBrush="Black"
                  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
-                 TextChanged="TextArea_TextChanged" SelectionChanged="TextArea_SelectionChanged">
+                 TextChanged="TextArea_TextChanged" SelectionChanged="TextArea_SelectionChanged"
+                 IsEnabled="True">
             <TextBox.ContextMenu>
                 <ContextMenu Name="CustomContextMenu" Style="{DynamicResource ContextMenuStyle}">
                     <MenuItem Header="_Undo" Command="ApplicationCommands.Undo" InputGestureText=" ">

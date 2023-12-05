@@ -1,4 +1,5 @@
-﻿using Notepad.Properties;
+﻿using Notepad.Helper;
+using Notepad.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -151,6 +152,11 @@ namespace Notepad.Windows
         {
             // Close the dialog window.
             Close();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         #region Theme Management

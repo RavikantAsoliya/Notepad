@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Notepad.Helper;
 
 namespace Notepad.Windows
 {
@@ -72,6 +73,11 @@ namespace Notepad.Windows
         {
             Result = null; // Set the Result to null.
             this.Close(); // Close the window.
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         #region Theme Management

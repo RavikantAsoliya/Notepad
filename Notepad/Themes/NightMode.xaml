@@ -331,14 +331,14 @@
     <!-- #endregion -->
 
     <!-- #region TextArea Styling -->
-    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#ffffff"/>
-    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#f0f0f0"/>
-    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#f0f0f0"/>
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#424242"/>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#424242"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#424242"/>
     <Style x:Key="TextAreaStyle" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#1e1e1e"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
         <Setter Property="Foreground" Value="#E6E6E6"/>
-        <Setter Property="BorderThickness" Value="0,0.5,0,0"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>

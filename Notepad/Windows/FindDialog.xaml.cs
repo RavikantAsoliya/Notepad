@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Notepad.Helper;
 
 namespace Notepad.Windows
 {
@@ -112,6 +113,11 @@ namespace Notepad.Windows
 
             // Enable or disable the FindNextButton based on whether the text is empty.
             FindNextButton.IsEnabled = textNotEmpty;
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            IconHelper.RemoveIcon(this);
         }
 
         #region Theme Management

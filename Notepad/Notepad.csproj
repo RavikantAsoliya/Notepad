@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\IconHelper.cs" />
     <Compile Include="TextFinder.cs" />
     <Compile Include="Windows\FindDialog.xaml.cs">
       <DependentUpon>FindDialog.xaml</DependentUpon>
