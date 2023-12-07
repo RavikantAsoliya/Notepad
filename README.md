@@ -1,44 +1,78 @@
 # Notepad Application
 
-## Overview
+![Repository Name](https://img.shields.io/badge/Repository-Notepad-blue)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/issues)
+[![GitHub Forks](https://img.shields.io/github/forks/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/network/members)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/pulls)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/commits/main)
+[![GitHub Watchers](https://img.shields.io/github/watchers/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/watchers)
+[![GitHub Contributors](https://img.shields.io/github/contributors/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad/graphs/contributors)
+[![GitHub Repository Size](https://img.shields.io/github/repo-size/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad)
+[![Code Size](https://img.shields.io/github/languages/code-size/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad)
 
 This Notepad application is a functional and feature-rich text editor built using WPF (Windows Presentation Foundation). It provides a user-friendly interface for creating, editing and managing text-based documents.
 
-## Features
+## Table of Contents
 
-- **Create & Edit:** Easily create new text documents and edit existing ones.
-- **Cut, Copy, Paste:** Standard text manipulation with clipboard support.
-- **Undo & Redo:** Seamlessly reverse or redo your actions.
-- **Find & Replace:** Locate and replace specific text within your documents.
-- **Zoom In & Out:** Adjust text zoom for better readability.
-- **Word Wrap:** Toggle word wrapping to enhance text display.
-- **Status Bar:** Stay informed about the cursor position, selected text, and more.
-- **Date & Time Insertion:** Insert the current date and time into your documents.
-- **Go To Line:** Quickly navigate to specific lines.
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Screenshots
 
-![Notepad Application Screenshot](https://github.com/RavikantAsoliya/Notepad/blob/main/Screenshots/Notepad-Screenshot.png)
+<img src="https://raw.githubusercontent.com/RavikantAsoliya/Notepad/main/Screenshots/Notepad%20-%20Day%20Mode.png" alt="Notepad - Day Mode" height=400>
+<img src="https://raw.githubusercontent.com/RavikantAsoliya/Notepad/main/Screenshots/Notepad%20-%20Night%20Mode.png" alt="Notepad - Dark Mode" height=430>
 
-## Installation
+## Features
 
-1. Clone this repository to your local machine: `git clone https://github.com/RavikantAsoliya/Notepad.git`
+- **Basic Text Editing:**
+  - Create, open, and save text documents.
+  - Cut, copy, and paste functionality and many more.
+- **Enhanced UI:**
+  - Modern and user-friendly interface.
+  - Theming support with DayMode and NightMode.
+- **Advanced Functionality:**
+  - Spell checking.(I will enhace this functionality later)
+  - Auto save and restore application state.
+  - Hide scrollbars and toggle word wrap.
+- **Customization:**
+  - Hide menu bar, always on top, and more.
+- **Status Bar:**
+  - Display current line and column position.
+  - Show/hide file path.
 
-2. Build the project using Visual Studio or your preferred development environment.
+### Some features are left to implement
+- Print Document
+- Page Setup
+- Font Dialog
+- Save and restore state of Font and Zoom
 
-3. Run the Notepad application.
+## Getting Started
+
+To run the Notepad application locally, follow these steps:
+
+1. Clone the repository to your local machine.git clone ```https://github.com/ravikantasoliya/notepad.git```
+2. Open the solution in Visual Studio.
+3. Build and run the application.
+
+## Usage
+
+- Create a new text document or open an existing one.
+- Explore the menu bar for various options such as File, Edit, Format, View, and Help.
+- Customize the application using the available settings.
+- Enjoy a simple yet feature-rich Notepad experience!
 
 ## Contributing
 
-We welcome contributions to enhance this Notepad Application. To contribute, follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Implement your changes and submit a pull request.
+If you would like to contribute to the project, feel free to submit a pull request. Contributions, bug reports, and feature requests are welcome!
 
 ## License
 
-This project is open-source and available under the MIT License. Check the [LICENSE](LICENSE) file for details.
+This Notepad application is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
