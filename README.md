@@ -12,7 +12,7 @@
 [![GitHub Repository Size](https://img.shields.io/github/repo-size/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad)
 [![Code Size](https://img.shields.io/github/languages/code-size/RavikantAsoliya/Notepad)](https://github.com/RavikantAsoliya/Notepad)
 
-This Notepad application is a functional and feature-rich text editor built using WPF (Windows Presentation Foundation). It provides a user-friendly interface for creating, editing and managing text-based documents.
+This Notepad application is a functional and feature-rich text editor built using WPF (Windows Presentation Foundation). It provides a user-friendly interface for creating, editing, and managing text-based documents.
 
 ## Table of Contents
 
@@ -24,38 +24,45 @@ This Notepad application is a functional and feature-rich text editor built usin
 
 ## Screenshots
 
+*Notepad - Day Mode*
+
 <img src="https://raw.githubusercontent.com/RavikantAsoliya/Notepad/main/Screenshots/Notepad%20-%20Day%20Mode.png" alt="Notepad - Day Mode" height=400>
+
+*Notepad - Night Mode*
+
 <img src="https://raw.githubusercontent.com/RavikantAsoliya/Notepad/main/Screenshots/Notepad%20-%20Night%20Mode.png" alt="Notepad - Dark Mode" height=430>
+
 
 ## Features
 
 - **Basic Text Editing:**
   - Create, open, and save text documents.
-  - Cut, copy, and paste functionality and many more.
+  - Cut, copy, and paste functionality, and more.
 - **Enhanced UI:**
   - Modern and user-friendly interface.
   - Theming support with DayMode and NightMode.
 - **Advanced Functionality:**
-  - Spell checking.(I will enhace this functionality later)
-  - Auto save and restore application state.
+  - Spell checking (to be enhanced later).
+  - Auto-save and restore application state.
   - Hide scrollbars and toggle word wrap.
 - **Customization:**
-  - Hide menu bar, always on top, and more.
+  - Hide the menu bar, always on top, and more.
 - **Status Bar:**
   - Display current line and column position.
   - Show/hide file path.
 
-### Some features are left to implement
-- Print Document
-- Page Setup
-- Font Dialog
-- Save and restore state of Font and Zoom
+### To-Do List
+
+- [ ] Print Document
+- [ ] Page Setup
+- [ ] Font Dialog
+- [ ] Save and restore the state of Font and Zoom
 
 ## Getting Started
 
 To run the Notepad application locally, follow these steps:
 
-1. Clone the repository to your local machine.git clone ```https://github.com/ravikantasoliya/notepad.git```
+1. Clone the repository to your local machine: `git clone https://github.com/ravikantasoliya/notepad.git`
 2. Open the solution in Visual Studio.
 3. Build and run the application.
 
