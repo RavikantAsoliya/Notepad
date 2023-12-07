@@ -481,9 +481,10 @@ namespace Notepad
                 findDialog = new FindDialog(textFinder)
                 {
                     Owner = this,
+                    Topmost = this.Topmost,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
                     // Initialize the TextToFind property based on selected text (if any).
-                    TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : ""
+                    TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : Settings.Default.LastFindWord
                 };
 
                 // Dispose the dialog when it's closed.
@@ -550,9 +551,11 @@ namespace Notepad
                 replaceDialog = new ReplaceDialog(textFinder)
                 {
                     Owner = this,
+                    Topmost = this.Topmost,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
                     // Initialize the TextToFind property based on selected text (if any).
-                    TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : ""
+                    TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : Settings.Default.LastFindWord,
+                    TextToReplace = Settings.Default.LastReplaceWord.Length > 0 ? Settings.Default.LastReplaceWord : ""
                 };
 
                 // Dispose the dialog when it's closed.
@@ -586,6 +589,7 @@ namespace Notepad
             {
                 LineNumber = TextArea.LineCount.ToString(), // Set the default line number to the total line count.
                 Owner = this,
+                Topmost = this.Topmost,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
 
@@ -1180,6 +1184,13 @@ namespace Notepad
             this.Height = Settings.Default.WindowHeight;
             this.Left = Settings.Default.WindowLeft;
             this.Top = Settings.Default.WindowTop;
+            WordWrap.IsChecked = Settings.Default.WordWrapState;
+            StatusBar.IsChecked = Settings.Default.StatusBarState;
+            HideScrollbars.IsChecked = Settings.Default.HideScrollBarState;
+            SpellChecking.IsChecked = Settings.Default.SpellCheckingState;
+            ShowFilePath.IsChecked = Settings.Default.ShowFilePathState;
+            HideMenuBar.IsChecked = Settings.Default.HideMenubarState;
+            AlwaysOnTop.IsChecked = Settings.Default.AlwaysOnTopState;
         }
 
 
@@ -1189,6 +1200,13 @@ namespace Notepad
             Settings.Default.WindowHeight = this.Height;
             Settings.Default.WindowLeft = this.Left;
             Settings.Default.WindowTop = this.Top;
+            Settings.Default.WordWrapState = WordWrap.IsChecked;
+            Settings.Default.StatusBarState = StatusBar.IsChecked;
+            Settings.Default.HideScrollBarState = HideScrollbars.IsChecked;
+            Settings.Default.SpellCheckingState = SpellChecking.IsChecked;
+            Settings.Default.ShowFilePathState = ShowFilePath.IsChecked;
+            Settings.Default.HideMenubarState = HideMenuBar.IsChecked;
+            Settings.Default.AlwaysOnTopState = AlwaysOnTop.IsChecked;
             Settings.Default.Save();
         }
 
@@ -1214,6 +1232,36 @@ namespace Notepad
         private void AutoSave_Unchecked(object sender, RoutedEventArgs e)
         {
             autoSaveTimer.Stop();
+        }
+
+        private void HideMenuBar_Checked(object sender, RoutedEventArgs e)
+        {
+            Menubar.Visibility = Visibility.Collapsed;
+            TextArea.BorderThickness = new Thickness(0,0,0,0);
+        }
+
+        private void HideMenuBar_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Menubar.Visibility = Visibility.Visible;
+            TextArea.BorderThickness = new Thickness(0, 1, 0, 0);
+        }
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(HideMenuBar.IsChecked)
+            {
+                Menubar.Visibility = Visibility.Visible;
+                TextArea.BorderThickness = new Thickness(0, 1, 0, 0);
+            }
+        }
+
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (HideMenuBar.IsChecked)
+            {
+                Menubar.Visibility = Visibility.Collapsed;
+                TextArea.BorderThickness = new Thickness(0, 0, 0, 0);
+            }
         }
     }
 }

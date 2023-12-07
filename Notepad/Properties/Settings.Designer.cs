@@ -106,5 +106,113 @@ namespace Notepad.Properties {
                 this["WindowTop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideMenubarState {
+            get {
+                return ((bool)(this["HideMenubarState"]));
+            }
+            set {
+                this["HideMenubarState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideScrollBarState {
+            get {
+                return ((bool)(this["HideScrollBarState"]));
+            }
+            set {
+                this["HideScrollBarState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AlwaysOnTopState {
+            get {
+                return ((bool)(this["AlwaysOnTopState"]));
+            }
+            set {
+                this["AlwaysOnTopState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WordWrapState {
+            get {
+                return ((bool)(this["WordWrapState"]));
+            }
+            set {
+                this["WordWrapState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StatusBarState {
+            get {
+                return ((bool)(this["StatusBarState"]));
+            }
+            set {
+                this["StatusBarState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SpellCheckingState {
+            get {
+                return ((bool)(this["SpellCheckingState"]));
+            }
+            set {
+                this["SpellCheckingState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowFilePathState {
+            get {
+                return ((bool)(this["ShowFilePathState"]));
+            }
+            set {
+                this["ShowFilePathState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastFindWord {
+            get {
+                return ((string)(this["LastFindWord"]));
+            }
+            set {
+                this["LastFindWord"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastReplaceWord {
+            get {
+                return ((string)(this["LastReplaceWord"]));
+            }
+            set {
+                this["LastReplaceWord"] = value;
+            }
+        }
     }
 }

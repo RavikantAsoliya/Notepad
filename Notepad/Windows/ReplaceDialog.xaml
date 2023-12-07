@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Notepad.Windows"
         mc:Ignorable="d"
         Title="Replace" Height="192" Width="361" ResizeMode="NoResize"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid Margin="10, 10, 10, 12">
         <!-- Define two columns for the grid -->
         <Grid.ColumnDefinitions>

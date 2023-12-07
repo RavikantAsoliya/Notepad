@@ -46,8 +46,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <Canvas Grid.Row="0" x:Name="HideCanvas" Height="1" Background="{Binding ElementName=Menubar, Path=Background}" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave"></Canvas>
         <!-- Menu bar at the top -->
-        <Menu Style="{DynamicResource MenuBarStyle}" Name="Menubar" Grid.Row="0">
+        <Menu Style="{DynamicResource MenuBarStyle}" Name="Menubar" Grid.Row="0" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
             
             <!-- File menu -->
             <MenuItem Header="_File">
@@ -331,7 +332,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Hide Menubar" Name="HideMenuBar" IsCheckable="True">
+                <MenuItem Header="Hide Menubar" Name="HideMenuBar" IsCheckable="True" Checked="HideMenuBar_Checked" Unchecked="HideMenuBar_Unchecked">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xed1a;" FontFamily="Segoe Fluent Icons" FontSize="16" ></TextBlock>
                     </MenuItem.Icon>

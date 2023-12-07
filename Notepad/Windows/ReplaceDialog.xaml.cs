@@ -32,6 +32,7 @@ namespace Notepad.Windows
         /// Gets or sets the text to find in the text replacement process.
         /// </summary>
         public string TextToFind { get; set; }
+        public string TextToReplace { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the ReplaceDialog class with a TextFinder instance.
@@ -53,6 +54,8 @@ namespace Notepad.Windows
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            FindTextBox.Text = TextToFind;
+            ReplaceTextBox.Text = TextToReplace;
             // Update the button status based on the FindTextBox's content.
             UpdateButtonStatus();
 
@@ -172,5 +175,12 @@ namespace Notepad.Windows
             this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
         }
         #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Settings.Default.LastFindWord = FindTextBox.Text;
+            Settings.Default.LastReplaceWord = ReplaceTextBox.Text;
+            Settings.Default.Save();
+        }
     }
 }

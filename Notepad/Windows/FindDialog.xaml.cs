@@ -133,5 +133,11 @@ namespace Notepad.Windows
             this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
         }
         #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Settings.Default.LastFindWord = FindTextBox.Text;
+            Settings.Default.Save();
+        }
     }
 }
