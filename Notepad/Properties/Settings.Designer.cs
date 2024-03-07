@@ -214,5 +214,17 @@ namespace Notepad.Properties {
                 this["LastReplaceWord"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastOpenLocation {
+            get {
+                return ((string)(this["LastOpenLocation"]));
+            }
+            set {
+                this["LastOpenLocation"] = value;
+            }
+        }
     }
 }
