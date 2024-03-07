@@ -44,6 +44,11 @@ namespace Notepad
         public string FilePath { get; set; } = "";
 
         /// <summary>
+        ///  Gets or sets the last opened location when opening a folder.
+        /// </summary>
+        public string LastOpenLocation { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); // Default save location is documents
+
+        /// <summary>
         /// Gets or sets a flag indicating whether there are unsaved changes in the current document.
         /// </summary>
         public bool ShouldSave { get; set; } = false;
@@ -220,7 +225,7 @@ namespace Notepad
                 Filter = "Text Document (*.txt)|*.txt|All Files (*.*)|*.*", // Define the file type filters for the dialog.
                 Title = "Open", // Set the dialog's title.
                 Multiselect = false, // Allow only single file selection.
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), // Set the initial directory for the file dialog to the user's Documents folder.
+                InitialDirectory = LastOpenLocation, // Set the initial location to the location last opened from.
                 RestoreDirectory = true // Restore the directory to its previously selected location
             };
 
@@ -229,6 +234,7 @@ namespace Notepad
             {
                 FilePath = openFileDialog.FileName; // Get the full path of the selected file.
                 FileName = System.IO.Path.GetFileNameWithoutExtension(FilePath); // Extract the file name without its extension.
+                LastOpenLocation = System.IO.Path.GetDirectoryName(FilePath); // Save the opened directory to LastOpenLocation
                 FileData = File.ReadAllText(FilePath); // Read the content of the selected file and store it in FileData.
                 TextArea.Text = FileData; // Set the TextArea's text to the content of the selected file.
                 this.Title = FileName + " - Notepad"; // Update the window title to reflect the file name.
@@ -1191,6 +1197,7 @@ namespace Notepad
             ShowFilePath.IsChecked = Settings.Default.ShowFilePathState;
             HideMenuBar.IsChecked = Settings.Default.HideMenubarState;
             AlwaysOnTop.IsChecked = Settings.Default.AlwaysOnTopState;
+            LastOpenLocation = Settings.Default.LastOpenLocation;
         }
 
 
@@ -1207,6 +1214,7 @@ namespace Notepad
             Settings.Default.ShowFilePathState = ShowFilePath.IsChecked;
             Settings.Default.HideMenubarState = HideMenuBar.IsChecked;
             Settings.Default.AlwaysOnTopState = AlwaysOnTop.IsChecked;
+            Settings.Default.LastOpenLocation = LastOpenLocation;
             Settings.Default.Save();
         }
 
