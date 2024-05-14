@@ -92,7 +92,7 @@ namespace Notepad
             autoSaveTimer.Tick += AutoSaveTimer_Tick;
         }
 
-        
+
 
         #region File Menu Command's Code Implementation
 
@@ -1156,8 +1156,19 @@ namespace Notepad
                 (Settings.Default.LightTheme ? WindowsTheme.Light : WindowsTheme.Dark);
 
             // Set the window attribute to enable dark or light theme.
-            DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(),
-                theme == WindowsTheme.Light ? 19 : 20, new[] { 1 }, 4);
+            // Apply theme-specific attributes to the window based on Windows build number
+            if (GetWindowsBuildNumber() > 19044)
+            {
+                // Using DwmSetWindowAttribute to set window attribute based on theme
+                DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(),
+                    theme == WindowsTheme.Light ? 0 : 20, new[] { 1 }, 4);
+            }
+            else
+            {
+                // Using DwmSetWindowAttribute to set window attribute based on theme (different value for older Windows builds)
+                DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(),
+                    theme == WindowsTheme.Light ? 19 : 20, new[] { 1 }, 4);
+            }
 
             // Clear existing resource dictionaries and add the selected theme.
             System.Windows.Application.Current.Resources.MergedDictionaries.Clear();
@@ -1175,6 +1186,32 @@ namespace Notepad
             // Update theme selection checkboxes.
             DayMode.IsChecked = theme == WindowsTheme.Light;
             NightMode.IsChecked = theme == WindowsTheme.Dark;
+        }
+
+        /// <summary>
+        /// Retrieves the current Windows build number from the registry.
+        /// </summary>
+        /// <returns>The current Windows build number as an integer.</returns>
+        static int GetWindowsBuildNumber()
+        {
+            // Open registry key to access Windows version information
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
+            {
+                // Check if the key is accessible
+                if (key != null)
+                {
+                    // Retrieve the value of the "CurrentBuildNumber" registry entry
+                    object buildNumberValue = key.GetValue("CurrentBuildNumber");
+                    // Check if the build number value exists
+                    if (buildNumberValue != null)
+                    {
+                        // Parse and return the build number as an integer
+                        return int.Parse(buildNumberValue.ToString());
+                    }
+                }
+            }
+            // Return 0 if the build number cannot be retrieved
+            return 0;
         }
 
         #endregion
@@ -1245,7 +1282,7 @@ namespace Notepad
         private void HideMenuBar_Checked(object sender, RoutedEventArgs e)
         {
             Menubar.Visibility = Visibility.Collapsed;
-            TextArea.BorderThickness = new Thickness(0,0,0,0);
+            TextArea.BorderThickness = new Thickness(0, 0, 0, 0);
         }
 
         private void HideMenuBar_Unchecked(object sender, RoutedEventArgs e)
@@ -1256,7 +1293,7 @@ namespace Notepad
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
-            if(HideMenuBar.IsChecked)
+            if (HideMenuBar.IsChecked)
             {
                 Menubar.Visibility = Visibility.Visible;
                 TextArea.BorderThickness = new Thickness(0, 1, 0, 0);

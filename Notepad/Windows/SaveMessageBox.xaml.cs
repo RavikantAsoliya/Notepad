@@ -78,6 +78,7 @@ namespace Notepad.Windows
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+            this.Topmost = true;
         }
 
         #region Theme Management
