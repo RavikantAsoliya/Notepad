@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Notepad.Helper;
 using Notepad.Properties;
 using Notepad.Windows;
 using System;
@@ -58,8 +59,6 @@ namespace Notepad
         /// </summary>
         private bool IsWordWrapChecked { get; set; } = false;
 
-        readonly double currentFontSize; // Declare a variable to store the current font size.
-
         /// <summary>
         /// Gets or sets the FindDialog, used for finding text within the application.
         /// </summary>
@@ -77,22 +76,42 @@ namespace Notepad
 
         private readonly DispatcherTimer autoSaveTimer;
 
+        readonly double currentFontSize; // Declare a variable to store the current font size.
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
+            // Initialize the main window components.
             InitializeComponent();
+
+            // Ensure the required font is installed.
+            FontHelper.InstallFontIfNotInstalled("Segoe Fluent Icons", "Notepad.Resources.Segoe Fluent Icons.ttf");
+
+            // Initialize the current Windows theme.
             InitializeCurrentWindowsTheme();
+
+            // Set focus to the text area.
             TextArea.Focus();
+
+            // Set initial status for file path display.
             FilePathStatusBar.Content = "Untitled Document";
+
+            // Initialize the current font size.
             currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
+
+            // Initialize the text finder.
             textFinder = new TextFinder(ref TextArea);
+
+            // Log window dimensions for debugging purposes.
             Debug.WriteLine($"Left:{Left}, Top: {Top}, Height: {Height}, Width: {Width}");
 
+            // Initialize and configure the auto-save timer.
             autoSaveTimer = new DispatcherTimer();
             autoSaveTimer.Interval = TimeSpan.FromSeconds(1);
             autoSaveTimer.Tick += AutoSaveTimer_Tick;
         }
-
-
 
         #region File Menu Command's Code Implementation
 
@@ -793,6 +812,7 @@ namespace Notepad
             NotepadStatusBar.Visibility = Visibility.Collapsed;
         }
 
+
         #region Additional Features Implementation
 
         /// <summary>
@@ -983,6 +1003,104 @@ namespace Notepad
         }
 
         /// <summary>
+        /// Handles the tick event of the auto-save timer.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            // Save the document automatically.
+            SaveOldDocument();
+        }
+
+        /// <summary>
+        /// Handles the checked event of the auto-save checkbox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void AutoSave_Checked(object sender, RoutedEventArgs e)
+        {
+            // Check if the file exists.
+            if (File.Exists(FilePath))
+            {
+                // Start the auto-save timer.
+                autoSaveTimer.Start();
+            }
+            else
+            {
+                // Display an error message if the file does not exist.
+                MessageBox.Show("The autosave feature cannot start as the document does not exist. Please create or load a document to enable autosave functionality.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Uncheck the auto-save checkbox.
+                ((MenuItem)sender).IsChecked = false;
+            }
+        }
+
+        /// <summary>
+        /// Handles the unchecked event of the auto-save checkbox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void AutoSave_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Stop the auto-save timer.
+            autoSaveTimer.Stop();
+        }
+
+        /// <summary>
+        /// Handles the checked event of the hide menu bar checkbox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void HideMenuBar_Checked(object sender, RoutedEventArgs e)
+        {
+            // Hide the menu bar and adjust the text area border thickness.
+            Menubar.Visibility = Visibility.Collapsed;
+            TextArea.BorderThickness = new Thickness(0, 0, 0, 0);
+        }
+
+        /// <summary>
+        /// Handles the unchecked event of the hide menu bar checkbox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void HideMenuBar_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Show the menu bar and adjust the text area border thickness.
+            Menubar.Visibility = Visibility.Visible;
+            TextArea.BorderThickness = new Thickness(0, 1, 0, 0);
+        }
+
+        /// <summary>
+        /// Handles the mouse enter event of the window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            // Show the menu bar and adjust the text area border thickness if the hide menu bar checkbox is checked.
+            if (HideMenuBar.IsChecked)
+            {
+                Menubar.Visibility = Visibility.Visible;
+                TextArea.BorderThickness = new Thickness(0, 1, 0, 0);
+            }
+        }
+
+        /// <summary>
+        /// Handles the mouse leave event of the window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            // Hide the menu bar and adjust the text area border thickness if the hide menu bar checkbox is checked.
+            if (HideMenuBar.IsChecked)
+            {
+                Menubar.Visibility = Visibility.Collapsed;
+                TextArea.BorderThickness = new Thickness(0, 0, 0, 0);
+            }
+        }
+
+        /// <summary>
         /// Handles the Checked event to set the window to be always on top.
         /// </summary>
         /// <param name="sender">The event sender.</param>
@@ -1005,6 +1123,7 @@ namespace Notepad
         }
 
         #endregion
+
 
         #endregion
 
@@ -1089,7 +1208,6 @@ namespace Notepad
             // Restore the custom context menu's flow direction to LeftToRight for consistency.
             CustomContextMenu.FlowDirection = System.Windows.FlowDirection.LeftToRight;
         }
-
 
         #endregion
 
@@ -1216,17 +1334,31 @@ namespace Notepad
 
         #endregion
 
+        #region Save and Restore Window State
+
+        /// <summary>
+        /// Handles the source initialized event of the window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
+            // Restore the previous state of the application.
             RestoreState();
         }
 
+        /// <summary>
+        /// Restores the previous state of the application.
+        /// </summary>
         private void RestoreState()
         {
+            // Set window dimensions and position.
             this.Width = Settings.Default.WindowWidth;
             this.Height = Settings.Default.WindowHeight;
             this.Left = Settings.Default.WindowLeft;
             this.Top = Settings.Default.WindowTop;
+
+            // Restore various UI settings.
             WordWrap.IsChecked = Settings.Default.WordWrapState;
             StatusBar.IsChecked = Settings.Default.StatusBarState;
             HideScrollbars.IsChecked = Settings.Default.HideScrollBarState;
@@ -1237,13 +1369,18 @@ namespace Notepad
             LastOpenLocation = Settings.Default.LastOpenLocation;
         }
 
-
+        /// <summary>
+        /// Saves the current state of the application.
+        /// </summary>
         private void SaveState()
         {
+            // Save window dimensions and position.
             Settings.Default.WindowWidth = this.Width;
             Settings.Default.WindowHeight = this.Height;
             Settings.Default.WindowLeft = this.Left;
             Settings.Default.WindowTop = this.Top;
+
+            // Save various UI settings.
             Settings.Default.WordWrapState = WordWrap.IsChecked;
             Settings.Default.StatusBarState = StatusBar.IsChecked;
             Settings.Default.HideScrollBarState = HideScrollbars.IsChecked;
@@ -1252,61 +1389,11 @@ namespace Notepad
             Settings.Default.HideMenubarState = HideMenuBar.IsChecked;
             Settings.Default.AlwaysOnTopState = AlwaysOnTop.IsChecked;
             Settings.Default.LastOpenLocation = LastOpenLocation;
+
+            // Save settings to persistent storage.
             Settings.Default.Save();
         }
 
-        private void AutoSaveTimer_Tick(object sender, EventArgs e)
-        {
-            SaveOldDocument();
-        }
-
-        private void AutoSave_Checked(object sender, RoutedEventArgs e)
-        {
-            if (File.Exists(FilePath))
-            {
-                autoSaveTimer.Start();
-            }
-            else
-            {
-                MessageBox.Show("The autosave feature cannot start as the document does not exist. Please create or load a document to enable autosave functionality.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                ((MenuItem)sender).IsChecked = false;
-            }
-
-        }
-
-        private void AutoSave_Unchecked(object sender, RoutedEventArgs e)
-        {
-            autoSaveTimer.Stop();
-        }
-
-        private void HideMenuBar_Checked(object sender, RoutedEventArgs e)
-        {
-            Menubar.Visibility = Visibility.Collapsed;
-            TextArea.BorderThickness = new Thickness(0, 0, 0, 0);
-        }
-
-        private void HideMenuBar_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Menubar.Visibility = Visibility.Visible;
-            TextArea.BorderThickness = new Thickness(0, 1, 0, 0);
-        }
-
-        private void Window_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (HideMenuBar.IsChecked)
-            {
-                Menubar.Visibility = Visibility.Visible;
-                TextArea.BorderThickness = new Thickness(0, 1, 0, 0);
-            }
-        }
-
-        private void Window_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (HideMenuBar.IsChecked)
-            {
-                Menubar.Visibility = Visibility.Collapsed;
-                TextArea.BorderThickness = new Thickness(0, 0, 0, 0);
-            }
-        }
+        #endregion
     }
 }
