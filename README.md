@@ -51,12 +51,10 @@ This Notepad application is a functional and feature-rich text editor built usin
   - Display current line and column position.
   - Show/hide file path.
 
-### To-Do List
+### To-Do List (Left to Implement)
 
 - [ ] Print Document
 - [ ] Page Setup
-- [ ] Font Dialog
-- [ ] Save and restore the state of Font and Zoom
 
 ## Getting Started
 
