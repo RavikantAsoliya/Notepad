@@ -60,6 +60,11 @@ namespace Notepad
         private bool IsWordWrapChecked { get; set; } = false;
 
         /// <summary>
+        /// Declare a variable to store the current font size.
+        /// </summary>
+        private double CurrentFontSize { get; set; } = Settings.Default.FontSize;
+
+        /// <summary>
         /// Gets or sets the FindDialog, used for finding text within the application.
         /// </summary>
         private FindDialog findDialog;
@@ -75,8 +80,6 @@ namespace Notepad
         private readonly TextFinder textFinder;
 
         private readonly DispatcherTimer autoSaveTimer;
-
-        readonly double currentFontSize; // Declare a variable to store the current font size.
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -97,9 +100,6 @@ namespace Notepad
 
             // Set initial status for file path display.
             FilePathStatusBar.Content = "Untitled Document";
-
-            // Initialize the current font size.
-            currentFontSize = TextArea.FontSize; // Assign the current font size of the TextArea to the variable.
 
             // Initialize the text finder.
             textFinder = new TextFinder(ref TextArea);
@@ -724,7 +724,7 @@ namespace Notepad
         /// <summary>
         /// Gets or sets the current zoom level, which determines the scaling of content.
         /// </summary>
-        public double ZoomLevel { get; set; } = 1.0;
+        public double ZoomLevel { get; set; } = Settings.Default.ZoomPercentage;
 
         /// <summary>
         /// Gets or sets the step size used to adjust the zoom level, typically in increments like 10%.
@@ -774,7 +774,7 @@ namespace Notepad
         private void ApplyZoom()
         {
             // Update the font size of the TextArea based on the zoomLevel
-            TextArea.FontSize = currentFontSize * ZoomLevel; // current font size is the initial font size
+            TextArea.FontSize = CurrentFontSize * ZoomLevel; // current font size is the initial font size
 
             // Update the StatusBar ZoomPercentage to reflect the current zoom level
             ZoomPercentage.Content = $"{(int)(ZoomLevel * 100)}%";
@@ -1367,6 +1367,19 @@ namespace Notepad
             HideMenuBar.IsChecked = Settings.Default.HideMenubarState;
             AlwaysOnTop.IsChecked = Settings.Default.AlwaysOnTopState;
             LastOpenLocation = Settings.Default.LastOpenLocation;
+
+            TextArea.FontFamily = new FontFamily(Settings.Default.FontFamily);
+            TextArea.FontSize = Settings.Default.FontSize;
+            if (Settings.Default.FontBold)
+                TextArea.FontWeight = FontWeights.Bold;
+            else
+                TextArea.FontWeight = FontWeights.Normal;
+            if (Settings.Default.FontItalic)
+                TextArea.FontStyle = FontStyles.Italic;
+            else
+                TextArea.FontStyle = FontStyles.Normal;
+
+            ApplyZoom();
         }
 
         /// <summary>
@@ -1389,11 +1402,41 @@ namespace Notepad
             Settings.Default.HideMenubarState = HideMenuBar.IsChecked;
             Settings.Default.AlwaysOnTopState = AlwaysOnTop.IsChecked;
             Settings.Default.LastOpenLocation = LastOpenLocation;
+            Settings.Default.FontSize = CurrentFontSize;
+            Settings.Default.ZoomPercentage = ZoomLevel;
 
             // Save settings to persistent storage.
             Settings.Default.Save();
         }
 
         #endregion
+
+        private void FontMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            FontDialog fontDialog = new FontDialog
+            {
+                Owner = this
+            };
+            fontDialog.ShowDialog();
+            if (fontDialog.DialogResult == true)
+            {
+                // FontFamily
+                string fontName = Settings.Default.FontFamily;
+                TextArea.FontFamily = new System.Windows.Media.FontFamily(fontName);
+                // FontSize
+                TextArea.FontSize = Settings.Default.FontSize;
+                CurrentFontSize = Settings.Default.FontSize;
+                // Bold (FontWeight)
+                if (Settings.Default.FontBold)
+                    TextArea.FontWeight = FontWeights.Bold;
+                else
+                    TextArea.FontWeight = FontWeights.Normal;
+                // Italic (FontStyle)
+                if (Settings.Default.FontItalic)
+                    TextArea.FontStyle = FontStyles.Italic;
+                else
+                    TextArea.FontStyle = FontStyles.Normal;
+            }
+        }
     }
 }

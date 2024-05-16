@@ -77,6 +77,9 @@
     <Compile Include="Windows\FindDialog.xaml.cs">
       <DependentUpon>FindDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\FontDialog.xaml.cs">
+      <DependentUpon>FontDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GoToDialog.xaml.cs">
       <DependentUpon>GoToDialog.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\FindDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FontDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

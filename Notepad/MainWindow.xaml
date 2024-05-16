@@ -227,7 +227,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <!-- Font Settings -->
-                <MenuItem Header="_Font...">
+                <MenuItem Name="FontMenuItem" Header="_Font..." Click="FontMenuItem_Click">
                     <MenuItem.Icon>
                         <!-- Icon: Font Settings -->
                         <TextBlock Text="&#xe8d2;" FontFamily="Segoe Fluent Icons" FontSize="16"></TextBlock>
