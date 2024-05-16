@@ -1,4 +1,4 @@
-﻿<Window x:Class="Notepad.Windows.FontDialog"
+﻿<Window x:Class="Notepad.Windows.FontDialog" Style="{DynamicResource WindowStyle}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Notepad.Windows"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Font" Height="478" Width="441"
-Background="#f0f0f0">
+        Title="Font" Height="478" Width="441">
     <Window.Resources>
+        
         <x:Array x:Key="FontSizeOptions" Type="sys:Double">
             <sys:Double>8</sys:Double>
             <sys:Double>9</sys:Double>
@@ -29,6 +29,7 @@ Background="#f0f0f0">
             <sys:Double>72</sys:Double>
             <sys:Double>90</sys:Double>
         </x:Array>
+        
         <x:Array x:Key="FontStyleOptions" Type="sys:String">
             <sys:String>Normal</sys:String>
             <sys:String>Italic</sys:String>
@@ -36,39 +37,42 @@ Background="#f0f0f0">
             <sys:String>Bold Italic</sys:String>
 
         </x:Array>
+        
     </Window.Resources>
-    <Grid Margin="10" Background="#f0f0f0">
+    
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2.5*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,10,0">
+        <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Font:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="0" Text="Font:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <ListBox Grid.Row="1" x:Name="FontListBox" 
+                      Style="{DynamicResource ListBoxStyle1}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"
              ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}"
              SelectionChanged="FontList_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}"/>
+                        <TextBlock Text="{Binding}" FontFamily="{Binding}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
 
 
-        <Grid Grid.Row="0" Grid.Column="1">
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="1.8*"/>
             </Grid.ColumnDefinitions>
 
             <!--Grid for font style-->
@@ -77,8 +81,9 @@ Background="#f0f0f0">
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Content="Font Style:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBlock Grid.Row="0" Text="Font Style:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <ListBox Grid.Row="1" Name="FontStylesListBox"
+                         Style="{DynamicResource ListBoxStyle1}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"
                  ItemsSource="{Binding Source={StaticResource FontStyleOptions}}" SelectionChanged="FontStyleList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -94,25 +99,26 @@ Background="#f0f0f0">
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Content="Font Size:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBlock Grid.Row="0" Text="Size:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <ListBox Grid.Row="1" x:Name="FontSizeListBox"
+                         Style="{DynamicResource ListBoxStyle1}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"
                  ItemsSource="{Binding Source={StaticResource FontSizeOptions}}" SelectionChanged="FontSizeList_SelectionChanged">
                 </ListBox>
             </Grid>
         </Grid>
 
-        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Margin="0, 20, 0, 30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-              Header="sample" BorderThickness="1" BorderBrush="Black">
-            <Label Name="SampleText" Content="Sample" FlowDirection="LeftToRight"
+        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Margin="0, 20, 0, 30" Style="{DynamicResource GroupBoxStyle}"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+              Header="sample" BorderThickness="1">
+            <TextBlock Name="SampleText" Text="Sample" FlowDirection="LeftToRight"
                FontFamily="Consolas" FontSize="16" FontStyle="Normal" FontWeight="Normal"
-               HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-               VerticalAlignment="Center" VerticalContentAlignment="Center"></Label>
+               HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </GroupBox>
 
 
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-            <Button Name="OkButton" Content="OK" Margin="10" Width="70" Click="OKButton_Click"/>
-            <Button Name="CancelButton" Content="Cancel" Margin="10" Width="70" Click="CancelButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="OkButton" Content="OK" Margin="0,0,10,0" Width="70" Click="OKButton_Click"/>
+            <Button Style="{DynamicResource ButtonStyle}" Name="CancelButton" Content="Cancel" Margin="0" Width="70" Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>
