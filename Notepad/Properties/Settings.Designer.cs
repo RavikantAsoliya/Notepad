@@ -286,5 +286,113 @@ namespace Notepad.Properties {
                 this["LastOpenLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PaperSize {
+            get {
+                return ((string)(this["PaperSize"]));
+            }
+            set {
+                this["PaperSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PaperSource {
+            get {
+                return ((string)(this["PaperSource"]));
+            }
+            set {
+                this["PaperSource"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsPortrait {
+            get {
+                return ((bool)(this["IsPortrait"]));
+            }
+            set {
+                this["IsPortrait"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double LeftMargin {
+            get {
+                return ((double)(this["LeftMargin"]));
+            }
+            set {
+                this["LeftMargin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double TopMargin {
+            get {
+                return ((double)(this["TopMargin"]));
+            }
+            set {
+                this["TopMargin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double RightMargin {
+            get {
+                return ((double)(this["RightMargin"]));
+            }
+            set {
+                this["RightMargin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BottomMargin {
+            get {
+                return ((double)(this["BottomMargin"]));
+            }
+            set {
+                this["BottomMargin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Header {
+            get {
+                return ((string)(this["Header"]));
+            }
+            set {
+                this["Header"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Footer {
+            get {
+                return ((string)(this["Footer"]));
+            }
+            set {
+                this["Footer"] = value;
+            }
+        }
     }
 }

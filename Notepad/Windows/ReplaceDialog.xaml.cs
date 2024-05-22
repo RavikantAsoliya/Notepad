@@ -26,12 +26,16 @@ namespace Notepad.Windows
         /// <summary>
         /// Gets or sets the associated TextFinder instance for text searching functionality.
         /// </summary>
-        private TextFinder textFinder;
+        private readonly TextFinder textFinder;
 
         /// <summary>
         /// Gets or sets the text to find in the text replacement process.
         /// </summary>
         public string TextToFind { get; set; }
+
+        /// <summary>
+        /// Gets or sets the text that will replace the found text in the replacement operation.
+        /// </summary>
         public string TextToReplace { get; set; }
 
         /// <summary>
@@ -50,15 +54,18 @@ namespace Notepad.Windows
         }
 
         /// <summary>
-        /// Handles the Window_Loaded event. Sets up the initial state of the dialog.
+        /// Handles the Window_Loaded event. Sets up the initial state of the dialog when it is loaded.
         /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">Event arguments associated with the event.</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Set the text of the FindTextBox to the current TextToFind value.
             FindTextBox.Text = TextToFind;
+            // Set the text of the ReplaceTextBox to the current TextToReplace value.
             ReplaceTextBox.Text = TextToReplace;
-            // Update the button status based on the FindTextBox's content.
+            // Update the status of the buttons based on the current content of the FindTextBox.
             UpdateButtonStatus();
-
             // Select all text in the FindTextBox to make it easier for the user to replace or search again.
             FindTextBox.SelectAll();
         }
@@ -98,7 +105,6 @@ namespace Notepad.Windows
             textFinder.Find();
         }
 
-
         /// <summary>
         /// Updates TextFinder settings and replaces the currently selected text in the TextBox.
         /// </summary>
@@ -116,7 +122,6 @@ namespace Notepad.Windows
             textFinder.ReplaceText(ReplaceTextBox.Text);
         }
 
-
         /// <summary>
         /// Updates TextFinder settings and replaces all occurrences of the search text in the TextBox.
         /// </summary>
@@ -130,7 +135,6 @@ namespace Notepad.Windows
             // Replace all occurrences of the search text in the TextBox with the specified replacement text.
             textFinder.ReplaceAllText(ReplaceTextBox.Text);
         }
-
 
         /// <summary>
         /// Updates the TextFinder settings based on the values entered in the dialog.
@@ -147,7 +151,6 @@ namespace Notepad.Windows
             textFinder.WrapAround = WrapAroundCheckBox.IsChecked ?? false;
         }
 
-
         /// <summary>
         /// Handles the click event for the CancelButton, closing the dialog.
         /// </summary>
@@ -157,27 +160,46 @@ namespace Notepad.Windows
             Close();
         }
 
+        /// <summary>
+        /// Overrides the OnSourceInitialized method to remove the icon from the window.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+            this.Topmost = true;
         }
 
         #region Theme Management
+
         [DllImport("DwmApi")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
+
+        /// <summary>
+        /// Sets the theme of the PageSetupDialog based on the user's preference.
+        /// </summary>
         private void SetTheme()
         {
             if (Settings.Default.DarkTheme)
             {
+                // Set dark theme
                 DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(), 20, new[] { 1 }, 4);
                 return;
             }
+            // Set default light theme
             this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
         }
+
         #endregion
 
+        /// <summary>
+        /// Handles the Window_Closing event to save the current find and replace text in settings.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">Event arguments associated with the event.</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            // Save the current text from FindTextBox and ReplaceTextBox into settings.
             Settings.Default.LastFindWord = FindTextBox.Text;
             Settings.Default.LastReplaceWord = ReplaceTextBox.Text;
             Settings.Default.Save();

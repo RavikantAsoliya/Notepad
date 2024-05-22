@@ -38,7 +38,6 @@ namespace Notepad.Helper
             return false;
         }
 
-
         /// <summary>
         /// Installs a font from the specified source path to the system's font directory.
         /// </summary>
@@ -61,7 +60,6 @@ namespace Notepad.Helper
                 fontFolder.CopyHere(fontSourcePath);
             }
         }
-
 
         /// <summary>
         /// Extracts a font file from embedded resources and saves it to a temporary location.
@@ -98,7 +96,6 @@ namespace Notepad.Helper
             }
         }
 
-
         /// <summary>
         /// Retrieves the names of all installed fonts on the system.
         /// </summary>
@@ -117,7 +114,6 @@ namespace Notepad.Helper
             // Return the array of font names.
             return fontNames;
         }
-
 
         /// <summary>
         /// Uninstalls a font by its name.
@@ -151,7 +147,6 @@ namespace Notepad.Helper
             // Print a message to the console if the font was not found.
             Console.WriteLine($"Font '{fontName}' not found.");
         }
-
 
         /// <summary>
         /// Installs a font if it is not already installed.

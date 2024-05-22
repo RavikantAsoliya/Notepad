@@ -9,8 +9,12 @@ using System.Windows;
 
 namespace Notepad.Helper
 {
+    /// <summary>
+    /// Provides helper methods for manipulating window icons.
+    /// </summary>
     public static class IconHelper
     {
+        // Import user32.dll functions for window manipulation
         [DllImport("user32.dll")]
         static extern int GetWindowLong(IntPtr hwnd, int index);
 
@@ -25,6 +29,7 @@ namespace Notepad.Helper
         static extern IntPtr SendMessage(IntPtr hwnd, uint msg,
             IntPtr wParam, IntPtr lParam);
 
+        // Constants for window styles and messages
         const int GWL_EXSTYLE = -20;
         const int WS_EX_DLGMODALFRAME = 0x0001;
         const int SWP_NOSIZE = 0x0001;
@@ -33,6 +38,10 @@ namespace Notepad.Helper
         const int SWP_FRAMECHANGED = 0x0020;
         const uint WM_SETICON = 0x0080;
 
+        /// <summary>
+        /// Removes the icon from a specified window.
+        /// </summary>
+        /// <param name="window">The window from which to remove the icon.</param>
         public static void RemoveIcon(Window window)
         {
             // Get this window's handle

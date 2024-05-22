@@ -32,6 +32,7 @@ namespace Notepad.Windows
         /// Gets or sets the text to find in the associated TextFinder during text search.
         /// </summary>
         public string TextToFind { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the FindDialog class.
         /// </summary>
@@ -43,6 +44,7 @@ namespace Notepad.Windows
             textFinder = finder;
             FindTextBox.Focus();
         }
+        
         /// <summary>
         /// Handles the click event of the "Find Next" button. Updates the TextFinder settings based on the dialog controls and initiates the search for the next occurrence.
         /// </summary>
@@ -58,9 +60,6 @@ namespace Notepad.Windows
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //FindTextBox.Text = TextToFind;
-            //FindNextButton.IsEnabled = !string.IsNullOrEmpty(FindTextBox.Text);
-
             // Initialize the dialog and set focus.
             FindTextBox.Text = TextToFind;
             UpdateButtonStatus();
@@ -115,29 +114,51 @@ namespace Notepad.Windows
             FindNextButton.IsEnabled = textNotEmpty;
         }
 
+        /// <summary>
+        /// Overrides the OnSourceInitialized method to remove the icon from the window.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+            this.Topmost = true;
         }
 
         #region Theme Management
+
         [DllImport("DwmApi")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
+
+        /// <summary>
+        /// Sets the theme of the PageSetupDialog based on the user's preference.
+        /// </summary>
         private void SetTheme()
         {
             if (Settings.Default.DarkTheme)
             {
+                // Set dark theme
                 DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(), 20, new[] { 1 }, 4);
                 return;
             }
+            // Set default light theme
             this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
         }
+
         #endregion
 
+        /// <summary>
+        /// Handles the Closing event of the Window to save the last search word and application settings.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data containing cancel information.</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            // Save the text from the FindTextBox into the application settings for future use.
             Settings.Default.LastFindWord = FindTextBox.Text;
+
+            // Save the updated settings to persistent storage.
             Settings.Default.Save();
         }
+
     }
 }

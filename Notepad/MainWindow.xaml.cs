@@ -5,6 +5,7 @@ using Notepad.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -347,11 +348,34 @@ namespace Notepad
             return result;
         }
 
+        /// <summary>
+        /// Represents the PageSetupDialog instance used to configure page setup settings.
+        /// </summary>
+        private PageSetupDialog PageSetupDialog;
+
+        /// <summary>
+        /// Event handler for the Page Setup button click.
+        /// Opens the PageSetupDialog window and captures page setup settings if the dialog is closed with a true result.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void PageSetup_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Implement Page Setup Feature
-        }
+            // Instantiate a new PageSetupDialog window
+            PageSetupDialog = new PageSetupDialog();
 
+            // Display the PageSetupDialog window and capture the result
+            if (PageSetupDialog.ShowDialog() == true)
+            {
+                // Page setup settings captured, no further action needed here
+                Console.WriteLine("Result is OK");
+            }
+            else
+            {
+                Console.WriteLine("Result is Cancel or Close");
+            }
+        }
+        
         private void Print_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // TODO: Implement this Print Feature
@@ -506,7 +530,6 @@ namespace Notepad
                 findDialog = new FindDialog(textFinder)
                 {
                     Owner = this,
-                    Topmost = this.Topmost,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
                     // Initialize the TextToFind property based on selected text (if any).
                     TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : Settings.Default.LastFindWord
@@ -576,7 +599,6 @@ namespace Notepad
                 replaceDialog = new ReplaceDialog(textFinder)
                 {
                     Owner = this,
-                    Topmost = this.Topmost,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
                     // Initialize the TextToFind property based on selected text (if any).
                     TextToFind = TextArea.SelectedText.Length > 0 ? TextArea.SelectedText : Settings.Default.LastFindWord,
@@ -614,7 +636,6 @@ namespace Notepad
             {
                 LineNumber = TextArea.LineCount.ToString(), // Set the default line number to the total line count.
                 Owner = this,
-                Topmost = this.Topmost,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
 
@@ -697,7 +718,46 @@ namespace Notepad
 
         #region Format Menu Command's Code Implementation
 
-        // TODO: Font Dialog and Its Implementation
+
+        /// <summary>
+        /// Handles the Click event of the FontMenuItem to display a font selection dialog
+        /// and apply the selected font settings to the text area.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void FontMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Create and show a new FontDialog with the main window as its owner.
+            FontDialog fontDialog = new FontDialog
+            {
+                Owner = this
+            };
+            fontDialog.ShowDialog();
+
+            // Check if the dialog result is true, indicating the user confirmed the selection.
+            if (fontDialog.DialogResult == true)
+            {
+                // Apply the selected font family to the text area.
+                string fontName = Settings.Default.FontFamily; // Get the font family name from settings.
+                TextArea.FontFamily = new System.Windows.Media.FontFamily(fontName); // Set the font family.
+
+                // Apply the selected font size to the text area.
+                TextArea.FontSize = Settings.Default.FontSize; // Set the font size.
+                CurrentFontSize = Settings.Default.FontSize; // Update the current font size.
+
+                // Apply bold formatting based on the setting.
+                if (Settings.Default.FontBold)
+                    TextArea.FontWeight = FontWeights.Bold; // Set font weight to bold.
+                else
+                    TextArea.FontWeight = FontWeights.Normal; // Set font weight to normal.
+
+                // Apply italic formatting based on the setting.
+                if (Settings.Default.FontItalic)
+                    TextArea.FontStyle = FontStyles.Italic; // Set font style to italic.
+                else
+                    TextArea.FontStyle = FontStyles.Normal; // Set font style to normal.
+            }
+        }
 
         /// <summary>
         /// Enables word wrapping for the text area.
@@ -1411,32 +1471,5 @@ namespace Notepad
 
         #endregion
 
-        private void FontMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            FontDialog fontDialog = new FontDialog
-            {
-                Owner = this
-            };
-            fontDialog.ShowDialog();
-            if (fontDialog.DialogResult == true)
-            {
-                // FontFamily
-                string fontName = Settings.Default.FontFamily;
-                TextArea.FontFamily = new System.Windows.Media.FontFamily(fontName);
-                // FontSize
-                TextArea.FontSize = Settings.Default.FontSize;
-                CurrentFontSize = Settings.Default.FontSize;
-                // Bold (FontWeight)
-                if (Settings.Default.FontBold)
-                    TextArea.FontWeight = FontWeights.Bold;
-                else
-                    TextArea.FontWeight = FontWeights.Normal;
-                // Italic (FontStyle)
-                if (Settings.Default.FontItalic)
-                    TextArea.FontStyle = FontStyles.Italic;
-                else
-                    TextArea.FontStyle = FontStyles.Normal;
-            }
-        }
     }
 }

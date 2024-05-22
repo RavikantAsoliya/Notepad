@@ -101,24 +101,39 @@ namespace Notepad.Windows
             return (key >= Key.D0 && key <= Key.D9) || (key >= Key.NumPad0 && key <= Key.NumPad9);
         }
 
+        /// <summary>
+        /// Overrides the OnSourceInitialized method to remove the icon from the window.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);
+            this.Topmost = true;
         }
 
         #region Theme Management
+
         [DllImport("DwmApi")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, int[] attrValue, int attrSize);
+
+        /// <summary>
+        /// Sets the theme of the PageSetupDialog based on the user's preference.
+        /// </summary>
         private void SetTheme()
         {
             if (Settings.Default.DarkTheme)
             {
+                // Set dark theme
                 DwmSetWindowAttribute(new WindowInteropHelper(this).EnsureHandle(), 20, new[] { 1 }, 4);
                 LabelLineNumber.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+
                 return;
             }
+            // Set default light theme
             this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
         }
+
         #endregion
+
     }
 }

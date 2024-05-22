@@ -81,8 +81,6 @@ namespace Notepad.Windows
             FontSizeListBox.SelectedItem = SampleText.FontSize;
         }
 
-
-
         /// <summary>
         /// Event handler for font selection change.
         /// </summary>
@@ -91,7 +89,6 @@ namespace Notepad.Windows
             // Set the FontFamily of the sample label to the selected font family from the font list box.
             SampleText.FontFamily = (FontFamily)FontListBox.SelectedItem;
         }
-
 
         /// <summary>
         /// Event handler for font style selection change.
@@ -106,7 +103,6 @@ namespace Notepad.Windows
             SampleText.FontWeight = selectedStyle.Contains("Bold") ? FontWeights.Bold : FontWeights.Normal;
         }
 
-
         /// <summary>
         /// Event handler for font size selection change.
         /// </summary>
@@ -115,7 +111,6 @@ namespace Notepad.Windows
             // Set the FontSize of the sample label to the selected font size from the font size list box.
             SampleText.FontSize = (double)FontSizeListBox.SelectedItem;
         }
-
 
         /// <summary>
         /// Event handler for OK button click.
@@ -151,7 +146,6 @@ namespace Notepad.Windows
             Settings.Default.FontItalic = SampleText.FontStyle == FontStyles.Italic;
         }
 
-
         /// <summary>
         /// Close the dialog with specified dialog result.
         /// </summary>
@@ -175,6 +169,10 @@ namespace Notepad.Windows
         }
         #endregion
 
+        /// <summary>
+        /// Overrides the OnSourceInitialized method to remove the icon from the window.
+        /// </summary>
+        /// <param name="e">The event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             IconHelper.RemoveIcon(this);

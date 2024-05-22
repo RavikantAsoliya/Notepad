@@ -50,6 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -82,6 +83,9 @@
     </Compile>
     <Compile Include="Windows\GoToDialog.xaml.cs">
       <DependentUpon>GoToDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PageSetupDialog.xaml.cs">
+      <DependentUpon>PageSetupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ReplaceDialog.xaml.cs">
       <DependentUpon>ReplaceDialog.xaml</DependentUpon>
@@ -119,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\GoToDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PageSetupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
