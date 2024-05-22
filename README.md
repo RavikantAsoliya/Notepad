@@ -54,7 +54,6 @@ This Notepad application is a functional and feature-rich text editor built usin
 ### To-Do List (Left to Implement)
 
 - [ ] Print Document
-- [ ] Page Setup
 - [ ] Show Line Numbers and select the complete line
 - [ ] and more.
 
